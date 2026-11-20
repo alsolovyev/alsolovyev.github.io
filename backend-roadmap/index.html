@@ -1,0 +1,1477 @@
+<!doctype html>
+<html lang="ru" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="dark light">
+<meta name="theme-color" content="#0b0f15">
+<meta name="description" content="Практический roadmap Backend-разработчика: общая фундаментальная база, отдельные треки Go и Rust, бесплатные русскоязычные курсы, production-практика и портфолио.">
+<title>Backend Roadmap — Go & Rust · 2026</title>
+<style>
+:root {
+  color-scheme: dark;
+  --bg: #0b0f15;
+  --bg-soft: #0f151e;
+  --panel: #121a25;
+  --panel-2: #182231;
+  --panel-3: #202c3d;
+  --text: #e9eef6;
+  --text-soft: #c2ccda;
+  --muted: #8794a7;
+  --line: rgba(170,190,215,.14);
+  --line-strong: rgba(170,190,215,.24);
+  --accent: #a9e66e;
+  --accent-strong: #c1f18d;
+  --accent-soft: rgba(169,230,110,.12);
+  --blue: #8bb8ff;
+  --violet: #c2a6ff;
+  --warning: #f3c77b;
+  --danger: #f18a8a;
+  --shadow: 0 24px 80px rgba(0,0,0,.26);
+  --header-height: 82px;
+  --content-width: 1420px;
+  --radius: 18px;
+  --radius-sm: 12px;
+  --ease: cubic-bezier(.2,.75,.25,1);
+}
+html[data-theme="light"] {
+  color-scheme: light;
+  --bg: #f4f6f8;
+  --bg-soft: #edf1f5;
+  --panel: #ffffff;
+  --panel-2: #f7f9fb;
+  --panel-3: #eef2f7;
+  --text: #18212d;
+  --text-soft: #354255;
+  --muted: #68778b;
+  --line: rgba(30,50,75,.13);
+  --line-strong: rgba(30,50,75,.22);
+  --accent: #4c861f;
+  --accent-strong: #376b12;
+  --accent-soft: rgba(76,134,31,.11);
+  --blue: #2867b5;
+  --violet: #7553b5;
+  --warning: #98650d;
+  --danger: #b53b3b;
+  --shadow: 0 24px 80px rgba(30,50,75,.10);
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: 110px; }
+/* Prevent decorative and transformed elements from widening the page. */
+body { overflow-x: clip; }
+body {
+  margin: 0;
+  background:
+    radial-gradient(ellipse at 8% 4%, rgba(72,112,143,.13), transparent 32rem),
+    radial-gradient(ellipse at 94% 20%, rgba(110,145,70,.08), transparent 34rem),
+    var(--bg);
+  color: var(--text);
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 15px;
+  line-height: 1.72;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+button, input { font: inherit; }
+a { color: inherit; }
+::selection { background: var(--accent); color: #17200f; }
+.progress-track { position: fixed; z-index: 100; inset: 0 0 auto; height: 3px; background: transparent; }
+.progress-bar { height: 100%; width: 0; background: linear-gradient(90deg,var(--accent),var(--blue)); box-shadow: 0 0 18px rgba(169,230,110,.35); }
+.site-header {
+  position: sticky; top: 0; z-index: 80;
+  height: var(--header-height);
+  border-bottom: 1px solid var(--line);
+  background: color-mix(in srgb, var(--bg) 82%, transparent);
+  backdrop-filter: blur(18px) saturate(150%);
+  -webkit-backdrop-filter: blur(18px) saturate(150%);
+  transition: background .32s, box-shadow .32s;
+}
+.header-inner { max-width: var(--content-width); height: 100%; margin: 0 auto; padding: 0 42px; display: flex; align-items: center; justify-content: space-between; gap: 22px; }
+.brand { display: inline-flex; align-items: center; gap: 12px; min-width: 0; text-decoration: none; }
+.brand-mark { width: 32px; height: 32px; display: grid; place-items: center; border: 1px solid color-mix(in srgb,var(--accent) 44%,var(--line)); border-radius: 10px; color: var(--accent); background: var(--accent-soft); font: 700 12px/1 ui-monospace,SFMono-Regular,Menlo,monospace; letter-spacing: -.06em; transition: width .3s,height .3s,border-radius .3s; }
+.brand-text { display: flex; flex-direction: column; line-height: 1.18; }
+.brand-text strong { font-size: 12px; letter-spacing: .14em; font-weight: 750; }
+.brand-text span { margin-top: 4px; color: var(--muted); font-size: 10px; letter-spacing: .12em; text-transform: uppercase; }
+.header-nav { display: flex; align-items: center; gap: 7px; }
+.nav-link, .icon-button { border: 1px solid transparent; background: transparent; color: var(--text-soft); text-decoration: none; padding: 8px 11px; border-radius: 10px; font-size: 12px; font-weight: 650; transition: color .2s,background .2s,border .2s; cursor: pointer; }
+.nav-link:hover,.icon-button:hover { background: var(--panel-2); border-color: var(--line); color: var(--text); }
+.icon-button { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 36px; }
+.icon-button svg { width: 15px;height:15px; }
+.header-actions { display: flex; align-items: center; gap: 6px; }
+.hero { max-width: var(--content-width); margin: 0 auto; padding: 76px 42px 48px; position: relative; }
+.hero::after { content:""; position:absolute; top:46px; right:10%; width:260px; height:260px; border:1px solid var(--line); border-radius:50%; opacity:.26; pointer-events:none; box-shadow: 0 0 0 28px rgba(130,160,190,.025),0 0 0 58px rgba(130,160,190,.02); }
+.hero-kicker { display: flex; align-items:center; gap:10px; color:var(--accent); text-transform:uppercase; letter-spacing:.19em; font:700 10px/1.4 ui-monospace,SFMono-Regular,Menlo,monospace; }
+.kicker-dot { width:7px;height:7px;border-radius:50%;background:var(--accent);box-shadow:0 0 16px var(--accent); }
+.hero h1 { max-width: 900px; margin: 22px 0 12px; font-size: clamp(42px,6.2vw,78px); line-height: .98; letter-spacing: -.065em; font-weight: 760; }
+.hero h1 em { color:var(--accent); font-style:normal; }
+.hero-lead { max-width: 700px; color:var(--text-soft); font-size: clamp(16px,1.8vw,20px); line-height:1.55; }
+.hero-meta { display:flex; flex-wrap:wrap; gap:9px; margin-top:30px; }
+.meta-chip { display:inline-flex; align-items:center; gap:8px; border:1px solid var(--line); border-radius:999px; background:color-mix(in srgb,var(--panel) 76%,transparent); padding:8px 12px; color:var(--text-soft); font-size:11px; font-weight:650; }
+.meta-chip b { color:var(--text); font-weight:750; }
+.meta-chip .mini-dot { width:6px;height:6px;border-radius:50%;background:var(--accent); }
+.hero-divider { max-width:var(--content-width); margin:0 auto; padding:0 42px; }
+.hero-divider span { display:block;height:1px;background:linear-gradient(90deg,var(--line-strong),var(--line) 55%,transparent); }
+.layout { max-width:var(--content-width); margin:0 auto; padding:42px 42px 110px; display:grid; grid-template-columns: minmax(250px,290px) minmax(0,870px); gap: clamp(28px,4vw,64px); align-items:start; }
+/* Stretch the sidebar to the full article height so its sticky panel can follow page scrolling. */
+.toc-column { position:relative; min-width:0; align-self:stretch; }
+.toc-panel { position:sticky; top:calc(var(--header-height) + 24px); max-height:calc(100vh - var(--header-height) - 48px); overflow:hidden; border:1px solid var(--line); border-radius:var(--radius); background:color-mix(in srgb,var(--panel) 88%,transparent); box-shadow:var(--shadow); opacity:0; transform:translateY(16px); pointer-events:none; transition:opacity .38s var(--ease),transform .38s var(--ease); }
+.has-scrolled .toc-panel { opacity:1;transform:translateY(0);pointer-events:auto; }
+.toc-head { padding:17px 17px 12px; border-bottom:1px solid var(--line); }
+.toc-label { display:flex;align-items:center;justify-content:space-between; gap:10px; color:var(--muted); font:700 11px/1.35 ui-monospace,SFMono-Regular,Menlo,monospace; letter-spacing:.12em; text-transform:uppercase; }
+.toc-count { color:var(--accent); }
+.toc-search { width:100%; margin-top:13px; border:1px solid var(--line); border-radius:9px; background:var(--bg-soft); padding:10px 11px; color:var(--text); outline:none; font-size:13px; }
+.toc-search:focus { border-color:var(--accent); box-shadow:0 0 0 3px var(--accent-soft); }
+.toc-list { list-style:none; margin:0; padding:13px 9px 17px; overflow:auto; max-height:calc(100vh - var(--header-height) - 154px); scrollbar-width:thin; scrollbar-color:var(--line-strong) transparent; }
+.toc-item { margin:2px 0; }
+.toc-item a { display:block; position:relative; padding:8px 10px 8px 13px; border-radius:8px; color:var(--muted); text-decoration:none; font-size:13px; line-height:1.48; transition:color .18s,background .18s; }
+.toc-item.level-1 a { color:var(--text-soft);font-weight:750;margin-top:5px; }
+.toc-item.level-3 a { padding-left:27px;font-size:12px; }
+.toc-item a:hover { color:var(--text);background:var(--panel-2); }
+.toc-item a.active { color:var(--accent-strong);background:var(--accent-soft); }
+.toc-item a.active::before { content:"";position:absolute;left:0;top:8px;bottom:8px;width:2px;border-radius:2px;background:var(--accent); }
+.toc-item[hidden] { display:none; }
+.article-column { min-width:0; }
+.article {
+  min-width:0; color:var(--text-soft); font-size:15px; line-height:1.78;
+}
+.article > :first-child { margin-top:0; }
+.article h1,.article h2,.article h3,.article h4 { color:var(--text); scroll-margin-top:calc(var(--header-height) + 28px); }
+.article h1 { margin:68px 0 22px; padding-top:28px; border-top:1px solid var(--line); font-size:clamp(27px,3.2vw,38px); line-height:1.16; letter-spacing:-.04em; font-weight:760; }
+.article h1:first-child { margin-top:0; border-top:0;padding-top:0; }
+.article h1::before { content:"/"; margin-right:12px; color:var(--accent); font:500 .78em/1 ui-monospace,SFMono-Regular,Menlo,monospace; }
+.article h2 { margin:48px 0 16px; font-size:clamp(21px,2.5vw,27px); line-height:1.25; letter-spacing:-.035em; font-weight:730; }
+.article h3 { margin:30px 0 12px; font-size:18px; line-height:1.35; letter-spacing:-.02em; font-weight:700; }
+.article h4 { margin:23px 0 10px; font-size:15px; font-weight:720; }
+.article p { margin:0 0 17px; }
+.article strong { color:var(--text);font-weight:720; }
+.article em { color:var(--text-soft); }
+.article a { color:var(--blue); text-decoration:underline; text-decoration-color:color-mix(in srgb,var(--blue) 40%,transparent); text-underline-offset:3px; transition:color .18s,text-decoration-color .18s; overflow-wrap:anywhere; }
+.article a:hover { color:var(--accent-strong);text-decoration-color:currentColor; }
+.article ul,.article ol { padding-left:1.35rem;margin:0 0 20px; }
+.article li { padding-left:4px;margin:6px 0; }
+.article li::marker { color:var(--accent); }
+.article hr { border:0;height:1px;background:var(--line);margin:48px 0; }
+.article blockquote { margin:24px 0;padding:17px 20px;border-left:3px solid var(--accent);border-radius:0 12px 12px 0;background:var(--accent-soft);color:var(--text); }
+.article blockquote p:last-child { margin-bottom:0; }
+.article code { color:var(--accent-strong);background:var(--panel-3);border:1px solid var(--line);border-radius:5px;padding:.12em .38em;font: .88em ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; }
+.code-wrap { margin:20px 0 24px;overflow:auto;border:1px solid var(--line);border-radius:12px;background:var(--bg-soft); }
+.article pre { margin:0;padding:17px 19px;min-width:max-content;color:var(--text-soft);font:13px/1.7 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; }
+.article pre code { border:0;background:transparent;padding:0;color:inherit; }
+.table-wrap { width:100%;margin:22px 0 26px;overflow:auto;border:1px solid var(--line);border-radius:13px;background:var(--panel);scrollbar-width:thin; }
+.article table { width:100%;border-collapse:collapse;font-size:13px;line-height:1.6; }
+.article thead { background:var(--panel-2); }
+.article th { text-align:left;color:var(--text);font-size:11px;font-weight:760;letter-spacing:.025em; }
+.article th,.article td { padding:12px 14px;border-bottom:1px solid var(--line);vertical-align:top; }
+.article tr:last-child td { border-bottom:0; }
+.article tbody tr:hover { background:color-mix(in srgb,var(--accent-soft) 45%,transparent); }
+.article td:first-child { color:var(--text);font-weight:650; }
+.article .table-wrap a { white-space:normal; }
+.article > h1 + p,.article > h2 + p { color:var(--text-soft); }
+.article .table-wrap + p { margin-top:20px; }
+.footer { max-width:var(--content-width);margin:0 auto;padding:0 42px 48px; }
+.footer-inner { border-top:1px solid var(--line);padding-top:22px;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;color:var(--muted);font-size:11px; }
+.footer strong { color:var(--text-soft); }
+.mobile-toc-button { display:none;position:fixed;z-index:70;right:18px;bottom:18px;border:1px solid color-mix(in srgb,var(--accent) 35%,var(--line));border-radius:999px;background:var(--panel-2);color:var(--text);padding:12px 16px;box-shadow:var(--shadow);font-size:12px;font-weight:750;cursor:pointer; }
+.mobile-toc-backdrop { display:none; }
+.back-to-top { position:fixed;right:24px;bottom:84px;z-index:60;width:40px;height:40px;border:1px solid var(--line);border-radius:12px;background:var(--panel);color:var(--text);display:grid;place-items:center;opacity:0;transform:translateY(8px);pointer-events:none;transition:.25s;cursor:pointer;box-shadow:var(--shadow); }
+.back-to-top.visible { opacity:1;transform:none;pointer-events:auto; }
+.back-to-top svg { width:17px;height:17px; }
+.no-results { display:none;padding:14px;color:var(--muted);font-size:11px; }
+@media (max-width: 980px) {
+  .header-inner { padding:0 24px; min-width:0; }
+  /* The hero ornament used to sit 130px outside the viewport on phones. */
+  .hero::after { right:16px; width:clamp(140px,42vw,210px); height:clamp(140px,42vw,210px); }
+  .hero, .hero-divider, .layout, .footer { min-width:0; max-width:100%; }
+  .hero { padding:62px 24px 38px; }
+  .hero-divider { padding:0 24px; }
+  .layout { grid-template-columns: minmax(0,1fr);padding:34px 24px 90px; }
+  .toc-column { display:none; }
+  .mobile-toc-button { display:block; }
+  .footer { padding-left:24px;padding-right:24px; }
+  .mobile-toc-backdrop.open { display:block;position:fixed;z-index:90;inset:0;background:rgba(0,0,0,.55);backdrop-filter:blur(5px); }
+  .mobile-toc-backdrop .toc-panel { position:absolute;right:0;top:0;bottom:0;width:min(86vw,360px);max-height:none;border-radius:18px 0 0 18px;opacity:1;transform:translateX(100%);pointer-events:auto;transition:transform .28s var(--ease); }
+  .mobile-toc-backdrop.open .toc-panel { transform:translateX(0); }
+  .mobile-toc-backdrop .toc-list { max-height:calc(100dvh - 136px); }
+}
+@media (max-width: 620px) {
+  .site-header { height:68px; }
+  .header-inner { width:100%; padding:0 16px;gap:8px; }
+  .brand { flex:1 1 auto; min-width:0; }
+  .header-actions { flex:0 0 auto; }
+  .hero { overflow:clip; }
+  .hero::after { right:14px; top:42px; width:clamp(124px,40vw,154px); height:clamp(124px,40vw,154px); }
+  .article, .article p, .article li, .article td, .article th { min-width:0; overflow-wrap:anywhere; }
+  .table-wrap, .code-wrap { max-width:100%; overscroll-behavior-x:contain; }
+  .article code { overflow-wrap:anywhere; word-break:break-word; }
+  .brand-text span { display:none; }
+  .brand-text strong { font-size:10px;letter-spacing:.1em; }
+  .header-nav { display:none; }
+  .icon-button { padding:8px;min-width:35px; }
+  .icon-button .button-label { display:none; }
+  .hero { padding:48px 19px 30px; overflow:hidden; }
+  .hero::after { top:42px; }
+  .hero h1 { font-size:clamp(39px,12vw,59px); }
+  .hero-lead { font-size:15px; }
+  .hero-meta { gap:7px;margin-top:22px; }
+  .meta-chip { font-size:10px;padding:7px 10px; }
+  .hero-divider { padding:0 19px; }
+  .layout { padding:30px 19px 80px; }
+  .article { font-size:14px; }
+  .article h1 { margin-top:52px;font-size:28px; }
+  .article h2 { margin-top:38px;font-size:22px; }
+  .article h3 { font-size:17px; }
+  .article th,.article td { padding:10px 11px; }
+  .article table { font-size:12px; }
+  .footer { padding:0 19px 30px; }
+  .back-to-top { right:18px;bottom:79px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *,*::before,*::after { scroll-behavior:auto !important;transition-duration:.01ms !important;animation-duration:.01ms !important;animation-iteration-count:1 !important; }
+}
+@media print {
+  :root { color-scheme:light;--bg:#fff;--bg-soft:#fff;--panel:#fff;--panel-2:#f2f4f5;--panel-3:#f4f6f7;--text:#111;--text-soft:#252525;--muted:#555;--line:#ddd;--line-strong:#ccc;--accent:#3d6c19;--blue:#124d87; }
+  body { background:#fff;color:#111;font-size:10pt; }
+  .progress-track,.site-header,.toc-column,.mobile-toc-button,.mobile-toc-backdrop,.back-to-top { display:none !important; }
+  .hero { padding:20px 0 14px; }
+  .hero::after { display:none; }
+  .hero h1 { font-size:34pt; }
+  .hero-divider { padding:0; }
+  .layout { display:block;padding:20px 0;max-width:none; }
+  .article h1,.article h2,.article h3 { break-after:avoid; }
+  .article a { color:#124d87;text-decoration:underline; }
+  .table-wrap,.code-wrap { overflow:visible;break-inside:avoid; }
+  .article table { font-size:8pt; }
+  .article th,.article td { padding:6px 8px; }
+  .footer { padding:10px 0; }
+  a { overflow-wrap:anywhere; }
+}
+</style>
+</head>
+<body>
+<div class="progress-track" aria-hidden="true"><div class="progress-bar" id="progressBar"></div></div>
+<header class="site-header" id="siteHeader">
+  <div class="header-inner">
+    <a class="brand" href="#top" aria-label="В начало roadmap">
+      <span class="brand-mark">{ }</span>
+      <span class="brand-text"><strong>BACKEND FIELD GUIDE</strong><span>Go · Rust · Production</span></span>
+    </a>
+    <nav class="header-nav" aria-label="Быстрая навигация">
+      <a class="nav-link" href="#краткий-маршрут-и-оценка-времени">План</a>
+      <a class="nav-link" href="#часть-i-общая-фундаментальная-база-backend">Фундамент</a>
+      <a class="nav-link" href="#часть-ii-самостоятельный-трек-go-golang">Go</a>
+      <a class="nav-link" href="#часть-iii-самостоятельный-трек-rust">Rust</a>
+      <a class="nav-link" href="#часть-v-проекты-для-портфолио">Проекты</a>
+    </nav>
+    <div class="header-actions">
+      <button class="icon-button" id="themeToggle" type="button" aria-label="Переключить тему" title="Переключить тему">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M4.93 4.93l1.42 1.42m11.3 11.3 1.42 1.42M2 12h2m16 0h2M4.93 19.07l1.42-1.42m11.3-11.3 1.42-1.42"/></svg>
+        <span class="button-label">Тема</span>
+      </button>
+      <button class="icon-button" id="printButton" type="button" title="Печать / сохранить PDF" aria-label="Печать или сохранить PDF">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M7 8V3h10v5M7 17H5a2 2 0 0 1-2-2v-4a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v4a2 2 0 0 1-2 2h-2"/><path d="M7 14h10v7H7z"/></svg>
+        <span class="button-label">PDF</span>
+      </button>
+    </div>
+  </div>
+</header>
+<section class="hero" id="top">
+  <div class="hero-kicker"><span class="kicker-dot"></span> Developer learning path · 2026</div>
+  <h1>Backend<br><em>Roadmap</em></h1>
+  <p class="hero-lead">Два самостоятельных пути — Go и Rust. Общая фундаментальная база, проверенные русскоязычные материалы, production-практика и проекты для выхода на первую работу.</p>
+  <div class="hero-meta">
+    <span class="meta-chip"><span class="mini-dot"></span><b>20.11.2026</b> · актуальность материалов</span>
+    <span class="meta-chip"><b>2 часа</b> · каждый день</span>
+    <span class="meta-chip"><b>14 ч/нед.</b> · учебная нагрузка</span>
+    <span class="meta-chip"><b>Junior</b> · целевой уровень</span>
+    <span class="meta-chip"><b>RU</b> · материалы на русском</span>
+  </div>
+</section>
+<div class="hero-divider"><span></span></div>
+<div class="layout" id="contentLayout">
+  <aside class="toc-column" aria-label="Оглавление">
+    <div class="toc-panel" id="tocPanelDesktop">
+      <div class="toc-head">
+        <div class="toc-label"><span>Содержание</span><span class="toc-count" id="tocCount">—</span></div>
+        <input class="toc-search" id="tocSearchDesktop" type="search" placeholder="Найти раздел…" aria-label="Поиск по оглавлению">
+      </div>
+      <ul class="toc-list" id="tocListDesktop"></ul>
+      <div class="no-results" id="tocEmptyDesktop">Ничего не найдено.</div>
+    </div>
+  </aside>
+  <main class="article-column">
+    <article class="article" id="article">
+<h2 id="как-пользоваться-этим-документом" tabindex="-1">Как пользоваться этим документом</h2>
+<p>Документ объединяет учебный roadmap и подборку бесплатных русскоязычных материалов. Он рассчитан на человека, который начинает backend-разработку с нуля, умеет читать техническую документацию на английском и ориентируется на международный рынок и удалённую работу.</p>
+<p><strong>Важно: изучать Go и Rust одновременно не нужно.</strong> Сначала пройди общую базу, затем выбери один язык и следуй только его треку. Второй трек оставлен как самостоятельная альтернатива: его можно пройти позднее, когда появится опыт разработки.</p>
+<p>Для каждого этапа указаны: темы, зачем они нужны, практический результат, критерий освоения, примерная длительность и 1–3 бесплатных русскоязычных источника. Под «бесплатно» понимается бесплатный доступ к учебному содержимому на дату проверки; регистрация может требоваться, а сертификаты или дополнительные услуги могут быть платными. Условия платформ могут измениться.</p>
+<h3 id="как-читать-пометки" tabindex="-1">Как читать пометки</h3>
+<ul>
+<li><strong>Обязательно для Junior</strong> — без этого трудно самостоятельно реализовать и поддерживать обычный backend-сервис.</li>
+<li><strong>Полезно, но не блокирует первую работу</strong> — можно изучить после первого проекта или уже на работе.</li>
+<li><strong>На потом</strong> — технология или тема, которую не стоит осваивать до уверенного владения основным стеком.</li>
+<li><strong>Критерий готовности</strong> — наблюдаемое действие, которое доказывает, что тема усвоена; просто просмотр уроков не считается.</li>
+</ul>
+<p>Оценки времени — ориентиры, а не обещание трудоустройства. 14 часов в неделю дают примерно 60 часов в месяц и 730 часов в год. Практическая работа, исправление ошибок, повторение и поиск первой работы уже включены в календарные оценки.</p>
+<h1 id="краткий-маршрут-и-оценка-времени" tabindex="-1">Краткий маршрут и оценка времени</h1>
+<div aria-label="Таблица roadmap" class="table-wrap" role="region" tabindex="0"><table>
+<thead>
+<tr class="header">
+<th>Часть</th>
+<th style="text-align: right;">Go</th>
+<th style="text-align: right;">Rust</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Общая фундаментальная база</td>
+<td style="text-align: right;">16–20 недель</td>
+<td style="text-align: right;">16–20 недель</td>
+</tr>
+<tr class="even">
+<td>Язык и backend-экосистема</td>
+<td style="text-align: right;">16–22 недели</td>
+<td style="text-align: right;">22–30 недель</td>
+</tr>
+<tr class="odd">
+<td>Production-практика и портфолио</td>
+<td style="text-align: right;">8–12 недель</td>
+<td style="text-align: right;">10–14 недель</td>
+</tr>
+<tr class="even">
+<td><strong>Реалистичный ориентир от нуля</strong></td>
+<td style="text-align: right;"><strong>9–15 месяцев</strong></td>
+<td style="text-align: right;"><strong>12–18 месяцев</strong></td>
+</tr>
+</tbody>
+</table></div>
+<p>Оценки предполагают регулярные занятия и самостоятельное написание кода. При сильной математической базе или опыте разработки путь может быть короче. При перерывах, слабой практике или необходимости совмещать обучение с полной занятостью — длиннее.</p>
+<p><strong>Главная рекомендация для первой работы:</strong> если цель — как можно раньше выйти на рынок обычной backend-разработки, начинай с Go. Rust стоит выбрать первым, если тебе действительно интересны системное программирование, инфраструктура, производительность и строгая модель управления памятью, и ты готов к более длинной кривой обучения.</p>
+<h1 id="часть-i-общая-фундаментальная-база-backend" tabindex="-1">Часть I. Общая фундаментальная база Backend</h1>
+<p>Эту часть проходят и будущие Go-разработчики, и будущие Rust-разработчики. Здесь формируется понимание того, как устроены программы, сети, операционные системы, базы данных и серверные приложения.</p>
+<h2 id="этап-1-основы-программирования-и-алгоритмическое-мышление" tabindex="-1">Этап 1. Основы программирования и алгоритмическое мышление</h2>
+<p><strong>Срок:</strong> 5–7 недель.<br/>
+<strong>Приоритет:</strong> обязательно для Junior.</p>
+<h3 id="что-изучить" tabindex="-1">Что изучить</h3>
+<ol type="1">
+<li>Базовые конструкции: переменные, константы, типы данных, преобразование типов, условия, циклы, функции, область видимости.</li>
+<li>Работа с данными: строки, массивы/списки, словари/хеш-таблицы, множества, стек, очередь.</li>
+<li>Функциональное разбиение программы, композиция, модульность, чистые функции и побочные эффекты.</li>
+<li>Парадигмы: процедурное, объектно-ориентированное и функциональное программирование. ООП, инкапсуляция, композиция, полиморфизм и интерфейсы/трейты.</li>
+<li>Обработка ошибок: ожидаемые ошибки, исключительные ситуации, возврат ошибок, валидация входных данных.</li>
+<li>Алгоритмы: линейный поиск, бинарный поиск, сортировки, рекурсия, обход деревьев и графов на базовом уровне.</li>
+<li>Big O: временная и пространственная сложность, амортизированная сложность, компромисс памяти и времени.</li>
+<li>Введение в конкурентность: процесс, поток, задача, race condition, deadlock, взаимное исключение.</li>
+</ol>
+<h3 id="практика" tabindex="-1">Практика</h3>
+<ul>
+<li>Реши 30–50 небольших задач: строки, массивы, map, сортировка, поиск, стек и очередь.</li>
+<li>Напиши небольшую консольную программу: парсер CSV/JSON, обработчик логов или трекер расходов.</li>
+<li>Для каждой задачи объясняй сложность решения и граничные случаи.</li>
+<li>Не копируй решения до собственной попытки и не ограничивайся просмотром видео.</li>
+</ul>
+<p><strong>Критерий готовности:</strong> можешь самостоятельно написать небольшую программу из нескольких функций и типов, объяснить сложность основных операций, выбрать подходящую структуру данных и написать несколько тестов.</p>
+<h3 id="бесплатные-материалы-на-русском" tabindex="-1">Бесплатные материалы на русском</h3>
+<ol type="1">
+<li><a class="external-link" href="https://ru.hexlet.io/courses_programming_for_beginners_free" rel="noopener noreferrer" target="_blank">Хекслет — каталог бесплатных курсов для начинающих</a> — выбери курс только для знакомства с базовыми конструкциями, но не изучай третий язык параллельно с Go/Rust.</li>
+<li><a class="external-link" href="https://stepik.org/course/217/promo" rel="noopener noreferrer" target="_blank">Stepik — Алгоритмы: теория и практика. Методы</a> — базовые алгоритмические подходы и задачи; требуется знание основ программирования.</li>
+<li><a class="external-link" href="https://stepik.org/course/1547/promo" rel="noopener noreferrer" target="_blank">Stepik — Алгоритмы: теория и практика. Структуры данных</a> — реализация и применение основных структур данных; проходи после базового синтаксиса выбранного языка.</li>
+</ol>
+<h2 id="этап-2-интернет-компьютерные-сети-и-web" tabindex="-1">Этап 2. Интернет, компьютерные сети и Web</h2>
+<p><strong>Срок:</strong> 2–3 недели.<br/>
+<strong>Приоритет:</strong> обязательно для Junior.</p>
+<h3 id="что-изучить-1" tabindex="-1">Что изучить</h3>
+<ul>
+<li>Как проходит путь запроса от браузера или приложения до сервера и обратно.</li>
+<li>Клиент-серверная архитектура, IP-адреса, порты, сокеты, маршрутизация.</li>
+<li>DNS: домены, резолвинг, записи A/AAAA/CNAME/MX/TXT, TTL.</li>
+<li>TCP и UDP: handshake, порядок доставки, повторная передача, потери, задержки.</li>
+<li>HTTP: request/response, методы, статус-коды, заголовки, тело запроса, cookies, кэширование.</li>
+<li>Различия HTTP/1.1, HTTP/2 и HTTP/3; QUIC и почему HTTP/3 использует UDP.</li>
+<li>HTTPS, TLS, сертификаты, доверенная цепочка и базовые принципы криптографии.</li>
+<li>REST, JSON, XML, WebSocket, CORS и основы работы с прокси.</li>
+</ul>
+<h3 id="практика-1" tabindex="-1">Практика</h3>
+<ul>
+<li>Используй <code>curl -v</code> для запросов к разным API и разбирай заголовки и коды ответа.</li>
+<li>Посмотри DNS-запрос через <code>dig</code> или <code>nslookup</code>.</li>
+<li>Открой вкладку Network в браузере и сравни HTTP-запросы.</li>
+<li>Напиши краткое описание жизненного цикла HTTPS-запроса.</li>
+</ul>
+<p><strong>Критерий готовности:</strong> можешь объяснить DNS → TCP/QUIC → TLS → HTTP, разницу TCP/UDP, назначение методов и кодов HTTP, работу cookies и WebSocket.</p>
+<h3 id="бесплатные-материалы-на-русском-1" tabindex="-1">Бесплатные материалы на русском</h3>
+<ol type="1">
+<li><a class="external-link" href="https://stepik.org/course/208904/promo" rel="noopener noreferrer" target="_blank">Stepik — Основы компьютерных сетей</a> — 37 уроков, тесты и практические задания; программа обновлялась в ноябре 2026 года.</li>
+<li><a class="external-link" href="https://developer.mozilla.org/ru/docs/Web/HTTP/Guides/Overview" rel="noopener noreferrer" target="_blank">MDN — Обзор протокола HTTP</a> — клиент-серверная модель, сообщения и базовая терминология HTTP.</li>
+<li><a class="external-link" href="https://developer.mozilla.org/ru/docs/Web/API/WebSockets_API" rel="noopener noreferrer" target="_blank">MDN — WebSocket API</a> — назначение и принципы WebSocket.</li>
+</ol>
+<h2 id="этап-3-linux-терминал-bash-git-и-ssh" tabindex="-1">Этап 3. Linux, терминал, Bash, Git и SSH</h2>
+<p><strong>Срок:</strong> 2–3 недели.<br/>
+<strong>Приоритет:</strong> обязательно для Junior.</p>
+<h3 id="что-изучить-2" tabindex="-1">Что изучить</h3>
+<ul>
+<li>Файловая система Linux, пути, файлы, каталоги, символьные ссылки.</li>
+<li>Пользователи, группы, права <code>rwx</code>, <code>chmod</code>, <code>chown</code>, <code>sudo</code>.</li>
+<li>Процессы и сигналы: <code>ps</code>, <code>top</code>, <code>kill</code>, <code>systemctl</code>, <code>journalctl</code>.</li>
+<li>Командная строка: <code>grep</code>, <code>find</code>, <code>less</code>, <code>tail</code>, <code>awk</code> на базовом уровне, пайпы и перенаправление.</li>
+<li>Bash: переменные окружения, аргументы, exit code, простые скрипты.</li>
+<li>Git: commit, branch, merge, rebase на базовом уровне, conflict resolution, stash, <code>.gitignore</code>.</li>
+<li>GitHub: pull request, review, issue, README.</li>
+<li>SSH: ключи, подключение к серверу, безопасное хранение приватного ключа.</li>
+</ul>
+<h3 id="практика-2" tabindex="-1">Практика</h3>
+<ul>
+<li>Настрой Linux VM, WSL или отдельную машину для обучения.</li>
+<li>Создай GitHub-репозиторий и веди все учебные проекты через Git.</li>
+<li>Настрой SSH-ключ и подключись к тестовому серверу.</li>
+<li>Напиши Bash-скрипт, который собирает логи и архивирует результат.</li>
+</ul>
+<p><strong>Критерий готовности:</strong> можешь читать системные логи, запустить/остановить процесс, разобраться с правами доступа, подключиться по SSH и работать через ветки и pull request.</p>
+<h3 id="бесплатные-материалы-на-русском-2" tabindex="-1">Бесплатные материалы на русском</h3>
+<ol type="1">
+<li><a class="external-link" href="https://ru.hexlet.io/programs/cli-basics" rel="noopener noreferrer" target="_blank">Хекслет — Основы командной строки</a> — бесплатный курс, 19 уроков и 16 практических упражнений; обновлён в сентябре 2026 года.</li>
+<li><a class="external-link" href="https://ru.hexlet.io/programs/git-basics-free" rel="noopener noreferrer" target="_blank">Хекслет — Основы Git</a> — бесплатный курс, 15 уроков и 13 упражнений; обновлён в сентябре 2026 года.</li>
+<li><a class="external-link" href="https://courses.interlab.app/courses/docker" rel="noopener noreferrer" target="_blank">InterLAB — Docker и деплой</a> — последующие уроки охватывают Linux, SSH, Nginx, Docker, Compose, секреты и CI/CD; можно использовать как практическое продолжение.</li>
+</ol>
+<h2 id="этап-4-базы-данных-и-sql" tabindex="-1">Этап 4. Базы данных и SQL</h2>
+<p><strong>Срок:</strong> 3–4 недели.<br/>
+<strong>Приоритет:</strong> обязательно для Junior.</p>
+<h3 id="что-изучить-3" tabindex="-1">Что изучить</h3>
+<ul>
+<li>Реляционная модель: таблица, строка, столбец, первичный и внешний ключ.</li>
+<li>Проектирование схем: связи 1:1, 1:N, M:N, ограничения, нормализация и осознанная денормализация.</li>
+<li>SQL: <code>SELECT</code>, <code>INSERT</code>, <code>UPDATE</code>, <code>DELETE</code>, <code>WHERE</code>, <code>JOIN</code>, <code>GROUP BY</code>, <code>HAVING</code>, подзапросы, CTE, оконные функции.</li>
+<li>PostgreSQL: типы данных, последовательности/identity, UUID, JSONB, даты и время.</li>
+<li>Индексы: B-tree, составные индексы, частичные индексы; цена индекса при записи.</li>
+<li>Транзакции и ACID, уровни изоляции, блокировки и MVCC.</li>
+<li><code>EXPLAIN</code> / <code>EXPLAIN ANALYZE</code>, чтение плана запроса и базовая оптимизация.</li>
+<li>Миграции схемы: версионирование, безопасное изменение таблиц, миграции при деплое.</li>
+<li>NoSQL и MongoDB: документная модель, сценарии, где она полезна; почему NoSQL не является автоматической заменой SQL.</li>
+</ul>
+<h3 id="практика-3" tabindex="-1">Практика</h3>
+<ul>
+<li>Спроектируй БД для задач/проектов: пользователи, проекты, участники, задачи, комментарии.</li>
+<li>Напиши 20–30 запросов, включая JOIN, агрегаты, подзапросы и пагинацию.</li>
+<li>Создай несколько индексов и сравни <code>EXPLAIN ANALYZE</code> до и после.</li>
+<li>Напиши транзакцию, в которой несколько операций должны пройти атомарно.</li>
+<li>Создай первую миграцию и проверь сценарий развёртывания с пустой БД.</li>
+</ul>
+<p><strong>Критерий готовности:</strong> можешь спроектировать нормализованную схему, написать сложный SELECT, объяснить ACID и изоляцию, а также найти причину медленного запроса через план выполнения.</p>
+<h3 id="бесплатные-материалы-на-русском-3" tabindex="-1">Бесплатные материалы на русском</h3>
+<ol type="1">
+<li><a class="external-link" href="https://stepik.org/course/270334/promo" rel="noopener noreferrer" target="_blank">Stepik — PRO SQL</a> — бесплатный курс с интерактивной практикой; 26 уроков и более 100 задач, обновлён 15 ноября 2026 года.</li>
+<li><a class="external-link" href="https://courses.interlab.app/courses/sql-postgresql" rel="noopener noreferrer" target="_blank">InterLAB — SQL и PostgreSQL</a> — 9 уроков: JOIN, GROUP BY, нормализация, индексы, транзакции, изоляция и <code>EXPLAIN ANALYZE</code>.</li>
+<li><a class="external-link" href="https://postgrespro.ru/docs/postgresql/18/tutorial" rel="noopener noreferrer" target="_blank">PostgreSQL — русская документация Postgres Professional: введение и учебник</a> — практическое введение в PostgreSQL и SQL.</li>
+</ol>
+<h2 id="этап-5-docker-и-локальная-инфраструктура" tabindex="-1">Этап 5. Docker и локальная инфраструктура</h2>
+<p><strong>Срок:</strong> 1–2 недели.<br/>
+<strong>Приоритет:</strong> обязательно для Junior на базовом уровне.</p>
+<h3 id="что-изучить-4" tabindex="-1">Что изучить</h3>
+<ul>
+<li>Чем образ отличается от контейнера.</li>
+<li>Dockerfile, слои, сборка, теги и registry.</li>
+<li>Volumes, bind mounts, networks и порты.</li>
+<li>Docker Compose для запуска API, PostgreSQL и Redis.</li>
+<li>Multi-stage builds, <code>.dockerignore</code>, non-root user.</li>
+<li>Переменные окружения и секреты: не хранить пароли в Git и в Docker image.</li>
+</ul>
+<h3 id="практика-4" tabindex="-1">Практика</h3>
+<p>Запусти через Docker Compose PostgreSQL и Redis, затем упакуй простое приложение. Добавь healthcheck, volume для данных БД и отдельную сеть.</p>
+<p><strong>Критерий готовности:</strong> новый разработчик может клонировать проект, скопировать <code>.env.example</code> и запустить локальную инфраструктуру одной командой.</p>
+<h3 id="бесплатные-материалы-на-русском-4" tabindex="-1">Бесплатные материалы на русском</h3>
+<ol type="1">
+<li><a class="external-link" href="https://yandex.cloud/ru/training/docker" rel="noopener noreferrer" target="_blank">Yandex Cloud — Контейнеризация с Docker</a> — бесплатный практический курс примерно на 10 часов; актуальность указана на сентябрь 2026 года.</li>
+<li><a class="external-link" href="https://courses.interlab.app/courses/docker" rel="noopener noreferrer" target="_blank">InterLAB — Docker и деплой</a> — Dockerfile, Compose, секреты, Nginx, VPS и CI/CD; бесплатные материалы открыты для чтения.</li>
+</ol>
+<h2 id="этап-6-архитектура-и-проектирование" tabindex="-1">Этап 6. Архитектура и проектирование</h2>
+<p><strong>Срок:</strong> 2–3 недели.<br/>
+<strong>Приоритет:</strong> базовые принципы обязательны; сложный system design — позже.</p>
+<h3 id="что-изучить-5" tabindex="-1">Что изучить</h3>
+<ul>
+<li>Монолит и модульный монолит: границы модулей, единое развёртывание.</li>
+<li>Микросервисы: независимое развёртывание, распределённые транзакции, сетевые сбои, операционная сложность и стоимость поддержки.</li>
+<li>Layered Architecture: handler/controller, service/use case, repository/storage.</li>
+<li>Clean Architecture и Ports &amp; Adapters: направление зависимостей и границы системы.</li>
+<li>Dependency Injection: явная передача зависимостей, тестируемость, composition root.</li>
+<li>SOLID — как набор эвристик, а не обязательный шаблон для каждого класса или пакета.</li>
+<li>Паттерны: Strategy, Adapter, Factory, Decorator, Repository, Unit of Work — понимать назначение и не переусложнять.</li>
+<li>DDD на базовом уровне: сущность, value object, aggregate, bounded context, ubiquitous language.</li>
+<li>Event-driven architecture: события, очереди, eventual consistency, Outbox.</li>
+</ul>
+<h3 id="практика-5" tabindex="-1">Практика</h3>
+<p>Нарисуй схему модульного монолита для проекта управления задачами. Определи границы <code>users</code>, <code>projects</code>, <code>tasks</code>, <code>notifications</code>, опиши интерфейсы взаимодействия и причины, по которым пока не нужны микросервисы.</p>
+<p><strong>Критерий готовности:</strong> можешь обосновать границы модулей, объяснить направление зависимостей и отличить простую архитектуру от ненужного усложнения.</p>
+<h3 id="бесплатные-материалы-на-русском-5" tabindex="-1">Бесплатные материалы на русском</h3>
+<ol type="1">
+<li><a class="external-link" href="https://courses.interlab.app/courses/architecture" rel="noopener noreferrer" target="_blank">InterLAB — Архитектура ПО</a> — SOLID, паттерны, Clean Architecture, модульный монолит, события и очереди; бесплатный курс из 9 уроков.</li>
+<li><a class="external-link" href="https://refactoring.guru/ru" rel="noopener noreferrer" target="_blank">Refactoring Guru</a> — паттерны проектирования, принципы и рефакторинг.</li>
+<li><a class="external-link" href="https://learn.microsoft.com/ru-ru/azure/architecture/microservices/model/domain-analysis" rel="noopener noreferrer" target="_blank">Microsoft Learn — Анализ предметной области и DDD</a> — базовые концепции предметного моделирования и DDD.</li>
+</ol>
+<h3 id="итог-общей-базы" tabindex="-1">Итог общей базы</h3>
+<p>После общей базы ты должен уметь пользоваться Linux и Git, читать сетевые запросы, проектировать PostgreSQL-схему, писать SQL, запускать инфраструктуру через Docker Compose и объяснять архитектуру простого backend-сервиса. Далее выбери Go или Rust.</p>
+<h1 id="часть-ii-самостоятельный-трек-go-golang" tabindex="-1">Часть II. Самостоятельный трек Go (Golang)</h1>
+<p>Этот раздел — отдельная программа от основ языка до Junior Backend Developer. Он не требует изучения Rust.</p>
+<h2 id="go-1-язык-go-и-стандартная-библиотека" tabindex="-1">Go-1. Язык Go и стандартная библиотека</h2>
+<p><strong>Срок:</strong> 4–5 недель.<br/>
+<strong>Приоритет:</strong> обязательно для Junior.</p>
+<h3 id="что-изучить-6" tabindex="-1">Что изучить</h3>
+<ul>
+<li>Синтаксис, переменные, константы, типы, zero values, преобразования.</li>
+<li>Функции, multiple return values, variadic functions, closures.</li>
+<li>Массивы, slices, maps, строки и работа с Unicode.</li>
+<li>Structs, methods, pointer receivers, указатели и <code>nil</code>.</li>
+<li>Interfaces, composition, type assertion и type switch.</li>
+<li>Ошибки: <code>error</code>, wrapping, <code>errors.Is</code>, <code>errors.As</code>, собственные типы ошибок.</li>
+<li><code>defer</code>, <code>panic</code>, <code>recover</code> и допустимые сценарии их использования.</li>
+<li>Generics: type parameters, constraints, когда обобщения полезны и когда проще интерфейс.</li>
+<li>Packages, visibility, Go modules, <code>go.mod</code>, работа с зависимостями.</li>
+<li>Стандартная библиотека: <code>fmt</code>, <code>strings</code>, <code>time</code>, <code>io</code>, <code>os</code>, <code>encoding/json</code>, <code>net/http</code>, <code>context</code>.</li>
+</ul>
+<h3 id="практика-6" tabindex="-1">Практика</h3>
+<ul>
+<li>Напиши CLI-приложение, которое читает JSON-файл, валидирует данные и сохраняет результат.</li>
+<li>Разнеси код по пакетам и добавь тесты.</li>
+<li>Реализуй собственный тип ошибки и оборачивание ошибок.</li>
+<li>Используй generics только там, где они уменьшают дублирование без усложнения кода.</li>
+</ul>
+<p><strong>Критерий готовности:</strong> можешь написать небольшую программу без копирования туториала, объяснить slices/maps, указатели, интерфейсы и idiomatic error handling, а также структурировать Go module.</p>
+<h3 id="бесплатные-материалы-на-русском-6" tabindex="-1">Бесплатные материалы на русском</h3>
+<ol type="1">
+<li><a class="external-link" href="https://ru.hexlet.io/programs/go-basics?page=courses" rel="noopener noreferrer" target="_blank">Хекслет — Основы Go</a> — бесплатный вводный курс; синтаксис, типы, структуры, указатели, ошибки, slices и maps. Страница указывает обновление в сентябре 2026 года.</li>
+<li><a class="external-link" href="https://latorn.ru/courses/golang-s-nulya" rel="noopener noreferrer" target="_blank">Latorn — Golang с нуля</a> — бесплатный практический курс: 10 модулей, 30 уроков и 147 заданий; обновлён 25 сентября 2026 года.</li>
+<li><a class="external-link" href="https://www.godojo.dev/ru/" rel="noopener noreferrer" target="_blank">Godojo — Учебник Go</a> — бесплатный русскоязычный учебник из 132 уроков: от основ до интерфейсов, конкурентности, тестирования и паттернов.</li>
+</ol>
+<h2 id="go-2-конкурентность-context-и-диагностика" tabindex="-1">Go-2. Конкурентность, context и диагностика</h2>
+<p><strong>Срок:</strong> 3–4 недели.<br/>
+<strong>Приоритет:</strong> конкурентность и безопасная отмена операций обязательны; углублённая оптимизация — позже.</p>
+<h3 id="что-изучить-7" tabindex="-1">Что изучить</h3>
+<ul>
+<li>Goroutines и Channels: запуск задач, буферизованные и небуферизованные каналы.</li>
+<li><code>sync.Mutex</code>, <code>sync.RWMutex</code>, <code>sync.WaitGroup</code>, <code>sync.Once</code>, атомарные операции на базовом уровне.</li>
+<li><code>context.Context</code>: cancellation, deadline, timeout, передача контекста через слои приложения.</li>
+<li>Worker Pool, Fan-out/Fan-in, pipeline, semaphore и ограничение параллелизма.</li>
+<li>Data races, deadlocks, goroutine leaks, backpressure.</li>
+<li>Не использовать <code>time.Sleep</code> как механизм синхронизации.</li>
+<li><code>go test -race</code>, benchmarks, <code>pprof</code>, <code>go tool trace</code>, базовая работа с Delve.</li>
+</ul>
+<h3 id="практика-7" tabindex="-1">Практика</h3>
+<p>Напиши worker pool, который обрабатывает очередь задач с ограничением параллелизма. Реализуй отмену по <code>context</code>, graceful завершение и тест, выявляющий гонку данных.</p>
+<p><strong>Критерий готовности:</strong> можешь объяснить, кто владеет каналом и кто его закрывает, как остановить работу, избежать утечки горутин и проверить data race.</p>
+<h3 id="бесплатные-материалы-на-русском-7" tabindex="-1">Бесплатные материалы на русском</h3>
+<ol type="1">
+<li><a class="external-link" href="https://www.godojo.dev/ru/" rel="noopener noreferrer" target="_blank">Godojo — Учебник Go</a> — горутины, каналы, синхронизация, тестирование и шаблоны конкурентности.</li>
+<li><a class="external-link" href="https://www.youtube.com/watch?v=WlRSVo_eCQ4" rel="noopener noreferrer" target="_blank">Практический курс Go: backend-сервис уведомлений</a> — бесплатный видеокурс, опубликован в августе 2026 года; охватывает HTTP, PostgreSQL, горутины, context, тесты, логи и graceful shutdown.</li>
+<li><a class="external-link" href="https://habr.com/ru/articles/968660/" rel="noopener noreferrer" target="_blank">Хабр — Go profiling lifecycle</a> — практический разбор профилирования и диагностики Go-приложений.</li>
+</ol>
+<h2 id="go-3-http-серверы-rest-api-и-middleware" tabindex="-1">Go-3. HTTP-серверы, REST API и middleware</h2>
+<p><strong>Срок:</strong> 3–4 недели.<br/>
+<strong>Приоритет:</strong> обязательно для Junior.</p>
+<h3 id="что-изучить-8" tabindex="-1">Что изучить</h3>
+<ul>
+<li><code>net/http</code>: <code>http.Server</code>, handlers, <code>ServeMux</code>, request/response, timeouts.</li>
+<li>Современный routing стандартной библиотеки и смысл использования стороннего роутера.</li>
+<li>Middleware: logging, recovery, request ID, authentication, rate limiting.</li>
+<li>REST API, JSON, validation, статус-коды и единый формат ошибок.</li>
+<li>Pagination, filtering, sorting и versioning API.</li>
+<li>OpenAPI/Swagger и документирование контрактов.</li>
+<li>Ограничения тела запроса, таймауты, контекст запроса, graceful shutdown.</li>
+</ul>
+<h3 id="выбор-фреймворка-chi-gin-echo-или-fiber" tabindex="-1">Выбор фреймворка: Chi, Gin, Echo или Fiber</h3>
+<ul>
+<li><strong>Начни с <code>net/http</code>.</strong> Он формирует правильную модель HTTP в Go и необходим для понимания middleware и серверного жизненного цикла.</li>
+<li><strong>Chi — рекомендуемый следующий шаг.</strong> Минималистичен, основан на <code>net/http</code>, хорошо сочетается с обычными handler/middleware и не скрывает стандартные механизмы.</li>
+<li><strong>Gin — хорошая альтернатива для новичка</strong>, если в вакансиях и командах целевого рынка часто встречается Gin. У него много готовых возможностей и большая экосистема.</li>
+<li><strong>Echo</strong> — ещё одна зрелая альтернатива на базе <code>net/http</code> с удобным API и встроенными компонентами.</li>
+<li><strong>Fiber</strong> использует <code>fasthttp</code>, поэтому совместимость с экосистемой стандартного <code>net/http</code> отличается. Не выбирай Fiber первым только из-за benchmark-таблиц.</li>
+</ul>
+<p>Не учи все четыре. Для учебного проекта достаточно <code>net/http</code> + Chi. Gin можно попробовать в небольшом отдельном примере.</p>
+<h3 id="практика-8" tabindex="-1">Практика</h3>
+<p>Создай REST API для задач: CRUD, validation, пагинация, фильтрация, единый error response, middleware для request ID и логирования. Добавь OpenAPI-описание и проверку через <code>curl</code>/Postman.</p>
+<p><strong>Критерий готовности:</strong> можешь поднять HTTP-сервер с маршрутизацией, middleware, валидацией, стабильными ошибками и таймаутами.</p>
+<h3 id="бесплатные-материалы-на-русском-8" tabindex="-1">Бесплатные материалы на русском</h3>
+<ol type="1">
+<li><a class="external-link" href="https://habr.com/ru/articles/981356/" rel="noopener noreferrer" target="_blank">Хабр — Разбираем net/http на практике</a> — учебный цикл по созданию веб-сервиса; исходный пример упрощён и не предназначен для production без доработки.</li>
+<li><a class="external-link" href="https://selectel.ru/blog/gin-framework-for-go/" rel="noopener noreferrer" target="_blank">Selectel — Gin Framework для Go</a> — сравнение Gin, Echo, Fiber и Chi.</li>
+<li><a class="external-link" href="https://checkroi.ru/blog/echo-go-framework/" rel="noopener noreferrer" target="_blank">Checkroi — Echo, Gin, Fiber и Chi</a> — обзор различий; проверь актуальные версии библиотек перед копированием кода.</li>
+</ol>
+<h2 id="go-4-postgresql-и-доступ-к-данным" tabindex="-1">Go-4. PostgreSQL и доступ к данным</h2>
+<p><strong>Срок:</strong> 3–4 недели.<br/>
+<strong>Приоритет:</strong> обязательно для Junior.</p>
+<h3 id="что-изучить-9" tabindex="-1">Что изучить</h3>
+<ul>
+<li><code>database/sql</code>: <code>DB</code>, <code>Rows</code>, <code>Row</code>, <code>ExecContext</code>, <code>QueryContext</code>, транзакции и контексты.</li>
+<li>Connection pooling, ограничения пула, таймауты и закрытие соединений.</li>
+<li><code>pgx</code> / <code>pgxpool</code>: нативный PostgreSQL driver/toolkit для Go.</li>
+<li><code>sqlc</code>: генерация типизированного Go-кода из SQL-запросов.</li>
+<li><code>GORM</code>: ORM, модели, связи, миграции и trade-offs ORM-подхода.</li>
+<li>Миграции: Goose или golang-migrate; миграции должны быть повторяемыми и безопасными.</li>
+<li>Транзакции и границы транзакции на уровне бизнес-сценария.</li>
+<li>Ошибки БД: уникальные ограничения, конфликты, отсутствие строк, таймауты.</li>
+</ul>
+<h3 id="что-выбрать" tabindex="-1">Что выбрать</h3>
+<p>Для первого production-проекта рекомендую <strong>PostgreSQL + pgx/pgxpool + sqlc + Goose</strong>. Пиши SQL руками и используй генерацию кода, чтобы сократить рутинное сканирование результатов. Знай <code>database/sql</code>, поскольку это стандартная абстракция Go и часто встречается в проектах. GORM изучи обзорно, но не используй одновременно ORM и sqlc без реальной причины.</p>
+<h3 id="практика-9" tabindex="-1">Практика</h3>
+<p>Реализуй repository для пользователей и задач. Все запросы параметризованы. Добавь транзакцию на создание проекта и первого участника. Создай миграции и integration tests с реальным PostgreSQL в контейнере.</p>
+<p><strong>Критерий готовности:</strong> можешь безопасно выполнять CRUD, управлять пулом, писать транзакции, запускать миграции и диагностировать типичные ошибки БД.</p>
+<h3 id="бесплатные-материалы-на-русском-9" tabindex="-1">Бесплатные материалы на русском</h3>
+<ol type="1">
+<li><a class="external-link" href="https://dsbasko.github.io/postgres-cookbook/ru/" rel="noopener noreferrer" target="_blank">PostgreSQL Cookbook — PostgreSQL для разработчиков на Go</a> — 63 урока по PostgreSQL 18, pgxpool, sqlc, индексам, транзакциям, MVCC и Outbox.</li>
+<li><a class="external-link" href="https://www.youtube.com/watch?v=WlRSVo_eCQ4" rel="noopener noreferrer" target="_blank">Практический курс Go: backend-сервис уведомлений</a> — подключение PostgreSQL, CRUD, repository pattern, миграции и <code>database/sql</code>.</li>
+<li><a class="external-link" href="https://postgrespro.ru/docs/postgresql/18/tutorial" rel="noopener noreferrer" target="_blank">Postgres Professional — учебник PostgreSQL</a> — реляционная модель, SQL, JOIN, агрегаты, внешние ключи и транзакции.</li>
+</ol>
+<h2 id="go-5-аутентификация-безопасность-redis-и-интеграции" tabindex="-1">Go-5. Аутентификация, безопасность, Redis и интеграции</h2>
+<p><strong>Срок:</strong> 3–4 недели.<br/>
+<strong>Приоритет:</strong> аутентификация и базовая безопасность обязательны; брокеры и gRPC — после первого REST API.</p>
+<h3 id="что-изучить-10" tabindex="-1">Что изучить</h3>
+<ul>
+<li>Разница Authentication (кто ты) и Authorization (что тебе разрешено).</li>
+<li>Пароли: безопасное хеширование Argon2id/bcrypt, соль, политика сброса пароля.</li>
+<li>Cookie-based sessions: HttpOnly, Secure, SameSite, CSRF.</li>
+<li>JWT: назначение, подпись, срок действия, refresh-token rotation, отзыв токенов и типичные ошибки.</li>
+<li>OAuth 2.0 и OpenID Connect: authorization code flow + PKCE, scopes и redirect URI.</li>
+<li>RBAC и проверка прав не только на маршруте, но и на уровне конкретного объекта.</li>
+<li>SQL injection, XSS, CSRF, CORS, SSRF, rate limiting, секреты и безопасные заголовки.</li>
+<li>Redis: TTL, cache-aside, invalidation, distributed lock с осторожностью, Pub/Sub и Streams на обзорном уровне.</li>
+<li>Очереди: RabbitMQ или Kafka, producer/consumer, ack, retry, dead-letter queue, idempotency.</li>
+<li>gRPC и Protocol Buffers: proto contract, unary/streaming RPC, deadlines и cancellation.</li>
+</ul>
+<h3 id="практика-10" tabindex="-1">Практика</h3>
+<p>Добавь регистрацию, логин, logout, обновление сессии, RBAC и проверку владения ресурсом. Затем добавь Redis для одного понятного сценария кеширования. Брокер сообщений — в отдельном worker-сервисе, не встраивай его без необходимости.</p>
+<p><strong>Критерий готовности:</strong> умеешь безопасно хранить пароли, реализовать защищённую сессию, проверить права доступа на объекте и объяснить, как повторная доставка сообщения не должна повторно выполнять бизнес-операцию.</p>
+<h3 id="бесплатные-материалы-на-русском-10" tabindex="-1">Бесплатные материалы на русском</h3>
+<ol type="1">
+<li><a class="external-link" href="https://academy.whitevveb-security.ru/ru/courses/bezopasnaya-razrabotka/" rel="noopener noreferrer" target="_blank">Белый Веб — Безопасная разработка и AppSec</a> — бесплатная программа по OWASP, security development lifecycle, SAST/DAST/SCA и code review.</li>
+<li><a class="external-link" href="https://academy.whitevveb-security.ru/ru/courses/bezopasnost-api/" rel="noopener noreferrer" target="_blank">Белый Веб — Безопасность API: уязвимости, авторизация, OAuth и JWT</a> — вводный модуль доступен бесплатно; дальше есть платные модули.</li>
+<li><a class="external-link" href="https://guide.olezhek28.courses/" rel="noopener noreferrer" target="_blank">Олег Козырев — бесплатные гайды по Go и gRPC</a> — среди бесплатных материалов есть практический воркшоп по gRPC, Protobuf, серверу, клиенту, валидации и стримингу.</li>
+</ol>
+<h2 id="go-6-тестирование-качество-кода-и-production" tabindex="-1">Go-6. Тестирование, качество кода и production</h2>
+<p><strong>Срок:</strong> 3–4 недели.<br/>
+<strong>Приоритет:</strong> тесты, форматирование, анализ и корректное завершение — обязательно; глубокий профайлинг — полезно.</p>
+<h3 id="что-изучить-11" tabindex="-1">Что изучить</h3>
+<ul>
+<li><code>testing</code>, table-driven tests, subtests, benchmarks.</li>
+<li><code>httptest</code> для HTTP handler и middleware.</li>
+<li>Unit tests, integration tests, contract/API tests.</li>
+<li>Testcontainers для настоящих PostgreSQL/Redis в integration tests.</li>
+<li>Mocks/fakes: использовать только там, где это упрощает изоляцию, не мокать весь мир.</li>
+<li><code>gofmt</code>, <code>go vet</code>, <code>staticcheck</code>, <code>golangci-lint</code>.</li>
+<li><code>go test ./...</code>, <code>go test -race ./...</code>, <code>go test -bench</code>.</li>
+<li><code>slog</code> или другой structured logger, request ID, метрики и tracing.</li>
+<li>Конфигурация из env, валидация конфигурации на старте, отсутствие секретов в логах.</li>
+<li>Graceful shutdown: остановка приёма новых запросов, drain активных запросов, закрытие пула БД и workers.</li>
+<li>Docker multi-stage build, CI через GitHub Actions, деплой на VPS/PaaS.</li>
+</ul>
+<h3 id="практика-11" tabindex="-1">Практика</h3>
+<p>Настрой pipeline: форматирование, lint, unit tests, integration tests, build Docker image. Разверни приложение на VPS. Добавь health/readiness endpoints, structured logs, backup PostgreSQL и документированное восстановление.</p>
+<p><strong>Критерий готовности:</strong> pull request не проходит CI при ошибках тестов/lint; приложение можно задеплоить и корректно остановить, не теряя активные операции.</p>
+<h3 id="бесплатные-материалы-на-русском-11" tabindex="-1">Бесплатные материалы на русском</h3>
+<ol type="1">
+<li><a class="external-link" href="https://courses.interlab.app/courses/docker" rel="noopener noreferrer" target="_blank">InterLAB — Docker и деплой</a> — Docker, Compose, секреты, Nginx, HTTPS, VPS и GitHub Actions.</li>
+<li><a class="external-link" href="https://stepik.org/course/120679/promo" rel="noopener noreferrer" target="_blank">Stepik — Postman для тестирования API</a> — бесплатный курс с запросами, коллекциями и автоматическими проверками API; обновлён в ноябре 2026 года.</li>
+<li><a class="external-link" href="https://habr.com/ru/articles/968660/" rel="noopener noreferrer" target="_blank">Хабр — Go profiling lifecycle</a> — профилирование, метрики производительности и диагностика проблем.</li>
+</ol>
+<h2 id="go-7-экосистема-и-инструменты-что-знать-что-выбрать" tabindex="-1">Go-7. Экосистема и инструменты: что знать, что выбрать</h2>
+<ul>
+<li><strong>HTTP:</strong> сначала <code>net/http</code>, затем Chi. Gin — полезная альтернатива, Echo — ещё один зрелый вариант, Fiber — осознанный выбор при понимании отличий <code>fasthttp</code>.</li>
+<li><strong>PostgreSQL:</strong> <code>pgx</code>/<code>pgxpool</code> для драйвера и пула, <code>sqlc</code> для генерации типов из SQL, GORM — для понимания ORM.</li>
+<li><strong>Миграции:</strong> Goose или golang-migrate; выбери один инструмент.</li>
+<li><strong>Redis:</strong> go-redis или совместимый клиент; изучай API выбранной версии.</li>
+<li><strong>gRPC:</strong> <code>grpc-go</code> и <code>protoc</code> / генератор Go для Protocol Buffers.</li>
+<li><strong>Логирование:</strong> <code>log/slog</code> из стандартной библиотеки; структурированные поля и уровни.</li>
+<li><strong>Модули:</strong> <code>go mod</code>, <code>go get</code>, <code>go mod tidy</code>, SemVer и обновление зависимостей.</li>
+<li><strong>Качество:</strong> gofmt, go vet, staticcheck, golangci-lint.</li>
+<li><strong>Отладка:</strong> Delve, race detector, pprof, trace.</li>
+</ul>
+<p>Не нужно превращать список библиотек в список обязательных сертификатов. Для первой работы достаточно уверенно использовать один HTTP router, один DB stack, инструмент миграций, встроенные тесты и CI.</p>
+<h1 id="часть-iii-самостоятельный-трек-rust" tabindex="-1">Часть III. Самостоятельный трек Rust</h1>
+<p>Этот раздел — отдельная программа. Не нужно параллельно изучать Go. Rust требует больше времени на освоение модели владения и асинхронности, зато даёт строгие гарантии безопасности памяти без сборщика мусора.</p>
+<h2 id="rust-1-язык-ownership-и-система-типов" tabindex="-1">Rust-1. Язык, Ownership и система типов</h2>
+<p><strong>Срок:</strong> 6–8 недель.<br/>
+<strong>Приоритет:</strong> обязательно; это центральная часть изучения Rust.</p>
+<h3 id="что-изучить-12" tabindex="-1">Что изучить</h3>
+<ul>
+<li>Синтаксис, переменные, mutability, shadowing, базовые типы, функции, условия и циклы.</li>
+<li>Ownership: move, copy, drop, область жизни значения.</li>
+<li>Borrowing и references: <code>&amp;T</code>, <code>&amp;mut T</code>, правила алиасинга и изменяемости.</li>
+<li>Slices, <code>String</code> и <code>&amp;str</code>.</li>
+<li>Structs, Enums, Pattern Matching, <code>match</code>, <code>if let</code>.</li>
+<li>Traits, Generics, trait bounds и impl blocks.</li>
+<li>Lifetimes: зачем нужны, как читать аннотации и когда компилятор выводит их автоматически.</li>
+<li><code>Result</code>, <code>Option</code>, оператор <code>?</code>, создание и распространение ошибок.</li>
+<li>Modules, Crates, Cargo, workspaces, зависимости.</li>
+<li>Iterators, closures, smart pointers: <code>Box</code>, <code>Rc</code>, <code>Arc</code>, <code>RefCell</code>, <code>Mutex</code>.</li>
+<li>Stack и Heap, перемещения данных, модель памяти и RAII.</li>
+</ul>
+<h3 id="практика-12" tabindex="-1">Практика</h3>
+<ul>
+<li>Выполняй упражнения, пока не начнёшь понимать сообщения компилятора, а не просто подбирать исправление.</li>
+<li>Напиши CLI-программу для чтения и обработки файла.</li>
+<li>Раздели программу на library crate и binary crate.</li>
+<li>Напиши тесты и обработай ошибки без <code>unwrap()</code> в production-пути.</li>
+<li>Объясни, почему конкретный тип должен быть owned, borrowed или shared.</li>
+</ul>
+<p><strong>Критерий готовности:</strong> можешь написать небольшую программу на Rust без борьбы с компилятором на каждом шаге, объяснить move/borrow/lifetime, выбрать <code>String</code> или <code>&amp;str</code>, <code>Box</code> или <code>Arc</code> и использовать <code>Result</code>.</p>
+<h3 id="бесплатные-материалы-на-русском-12" tabindex="-1">Бесплатные материалы на русском</h3>
+<ol type="1">
+<li><a class="external-link" href="https://stepik.org/course/300965/promo" rel="noopener noreferrer" target="_blank">Stepik — Rust за выходные</a> — бесплатный вводный курс без требования предварительно знать Rust; 12 уроков и 24 задачи, обновлён 27 сентября 2026 года.</li>
+<li><a class="external-link" href="https://doc.rust-lang.ru/book/" rel="noopener noreferrer" target="_blank">The Rust Programming Language — русская версия</a> — основной учебник: Ownership, Borrowing, structs, enums, traits, generics, lifetimes, ошибки и Cargo.</li>
+<li><a class="external-link" href="https://stepik.org/course/298754/promo" rel="noopener noreferrer" target="_blank">Stepik — Rustlings: практикум Rust</a> — 26 уроков и 91 интерактивная задача на русском, обновлён 4 октября 2026 года.</li>
+</ol>
+<h2 id="rust-2-память-типы-и-конкурентность" tabindex="-1">Rust-2. Память, типы и конкурентность</h2>
+<p><strong>Срок:</strong> 3–4 недели.<br/>
+<strong>Приоритет:</strong> базовые механизмы обязательны; глубокая работа с unsafe и lock-free алгоритмами — позже.</p>
+<h3 id="что-изучить-13" tabindex="-1">Что изучить</h3>
+<ul>
+<li>Stack/Heap и стратегия владения памятью.</li>
+<li><code>Box&lt;T&gt;</code>, <code>Rc&lt;T&gt;</code>, <code>Arc&lt;T&gt;</code>, <code>Cell</code>, <code>RefCell</code>, <code>Mutex</code>, <code>RwLock</code>.</li>
+<li>Send и Sync на концептуальном уровне.</li>
+<li>Threads, <code>std::thread</code>, channels и shared state.</li>
+<li>Почему data race предотвращается моделью типов Rust, но deadlock и логические гонки всё ещё возможны.</li>
+<li><code>Arc&lt;Mutex&lt;T&gt;&gt;</code>, poisoning, блокировки и критические секции.</li>
+<li>Разница между параллелизмом и конкурентностью.</li>
+</ul>
+<h3 id="практика-13" tabindex="-1">Практика</h3>
+<p>Создай многопоточную программу, которая обрабатывает набор файлов, использует канал для результатов и корректно завершает рабочие потоки. Добавь тест на ожидаемый результат и обработку ошибок.</p>
+<p><strong>Критерий готовности:</strong> понимаешь ownership при передаче данных между потоками, <code>Send</code>/<code>Sync</code>, <code>Arc</code>/<code>Mutex</code> и риски блокировок.</p>
+<h3 id="бесплатные-материалы-на-русском-13" tabindex="-1">Бесплатные материалы на русском</h3>
+<ol type="1">
+<li><a class="external-link" href="https://stepik.org/course/298754/promo" rel="noopener noreferrer" target="_blank">Stepik — Rustlings: практикум Rust</a> — упражнения на владение, трейты, lifetimes, коллекции, потоки и тесты.</li>
+<li><a class="external-link" href="https://doc.rust-lang.ru/book/" rel="noopener noreferrer" target="_blank">The Rust Programming Language — русская версия</a> — разделы о владении, умных указателях и многопоточности.</li>
+<li><a class="external-link" href="https://github.com/rust-lang-ru" rel="noopener noreferrer" target="_blank">Русскоязычное сообщество Rust</a> — переводы, Rust by Example, книги и обновления сообщества.</li>
+</ol>
+<h2 id="rust-3-asyncawait-future-pin-и-tokio" tabindex="-1">Rust-3. Async/Await, Future, Pin и Tokio</h2>
+<p><strong>Срок:</strong> 4–6 недель.<br/>
+<strong>Приоритет:</strong> обязательно для современного Rust backend.</p>
+<h3 id="что-изучить-14" tabindex="-1">Что изучить</h3>
+<ul>
+<li><code>async fn</code>, <code>.await</code>, <code>Future</code> и <code>Poll</code>.</li>
+<li>Что такое executor/runtime и почему сама конструкция <code>async</code> не запускает задачу.</li>
+<li>Tokio Runtime, tasks, <code>tokio::spawn</code>, <code>select!</code>, timers и async I/O.</li>
+<li>Tokio channels, <code>Mutex</code>, <code>RwLock</code>, <code>Semaphore</code> и shared state.</li>
+<li>Отмена задач, timeout, graceful shutdown и обработка panic внутри задач.</li>
+<li>Базовая идея <code>Pin</code>, <code>Unpin</code>, <code>Waker</code> и polling. Для обычной прикладной разработки достаточно понимать, почему эти типы появляются в сигнатурах; писать собственный runtime не нужно.</li>
+<li>Отличия blocking и non-blocking I/O; как не блокировать async runtime синхронной операцией.</li>
+</ul>
+<h3 id="практика-14" tabindex="-1">Практика</h3>
+<p>Напиши асинхронный TCP/HTTP клиент или маленький worker-сервис на Tokio. Добавь ограничение одновременных задач, timeout, cancellation и корректное завершение.</p>
+<p><strong>Критерий готовности:</strong> понимаешь, что делает runtime, как запускаются и отменяются async tasks, почему нельзя блокировать executor и для чего существуют <code>Future</code> и <code>Pin</code>.</p>
+<h3 id="бесплатные-материалы-на-русском-14" tabindex="-1">Бесплатные материалы на русском</h3>
+<ol type="1">
+<li><a class="external-link" href="https://r007.github.io/RustTraining-Rus/async-book/" rel="noopener noreferrer" target="_blank">Async Rust: от Future до продакшена</a> — русскоязычная адаптация с объяснением Future, polling, runtime и практических async-паттернов.</li>
+<li><a class="external-link" href="https://doc.rust-lang.ru/async-book/" rel="noopener noreferrer" target="_blank">Асинхронная книга Rust — русская версия</a> — <code>async</code>/<code>.await</code>, Future, Pin и исполнение асинхронных задач.</li>
+<li><a class="external-link" href="https://habr.com/ru/companies/timeweb/articles/815811/" rel="noopener noreferrer" target="_blank">Хабр — Туториал по Tokio</a> — практическое знакомство с Tokio; сверяй API с актуальной документацией Tokio.</li>
+</ol>
+<h2 id="rust-4-http-api-и-фреймворки" tabindex="-1">Rust-4. HTTP API и фреймворки</h2>
+<p><strong>Срок:</strong> 4–5 недель.<br/>
+<strong>Приоритет:</strong> обязательно для Junior Rust backend.</p>
+<h3 id="что-изучить-15" tabindex="-1">Что изучить</h3>
+<ul>
+<li>HTTP server, routing, request/response и REST.</li>
+<li>Serde: сериализация и десериализация JSON.</li>
+<li>Axum: Router, handlers, extractors, State, response и error mapping.</li>
+<li>Middleware и Tower layers.</li>
+<li>Validation, request limits, timeouts, CORS и error responses.</li>
+<li>Конфигурация приложения, разделение handler/service/repository.</li>
+<li>Graceful shutdown с остановкой сервера и фоновых задач.</li>
+</ul>
+<h3 id="какой-фреймворк-выбрать" tabindex="-1">Какой фреймворк выбрать</h3>
+<ul>
+<li><strong>Axum — рекомендуемый старт.</strong> Современная композиция с Tokio и Tower, типизированные extractors и middleware layers.</li>
+<li><strong>Actix Web</strong> — зрелая альтернатива с собственной экосистемой и высоким уровнем готовой функциональности.</li>
+<li><strong>Rocket</strong> — удобный framework с сильным фокусом на эргономику и декларативность.</li>
+</ul>
+<p>Изучи Axum и не распыляйся. После завершения проекта можно переписать один endpoint на Actix Web для сравнения.</p>
+<h3 id="практика-15" tabindex="-1">Практика</h3>
+<p>Создай Axum API для задач. Добавь роуты, общие state, валидацию, типизированные ошибки, middleware request ID, логирование и graceful shutdown.</p>
+<p><strong>Критерий готовности:</strong> можешь объяснить жизненный цикл запроса в Axum, как передаётся state, как строится middleware и как преобразовать внутреннюю ошибку в корректный HTTP response.</p>
+<h3 id="бесплатные-материалы-на-русском-15" tabindex="-1">Бесплатные материалы на русском</h3>
+<ol type="1">
+<li><a class="external-link" href="https://habr.com/ru/companies/timeweb/articles/789662/" rel="noopener noreferrer" target="_blank">Хабр — Начало работы с Axum</a> — вводный разбор маршрутов, handlers и подключения PostgreSQL; статья использует старые версии библиотек, поэтому изучай концепции, а код сверяй с текущим Axum.</li>
+<li><a class="external-link" href="https://habr.com/ru/articles/1033730/" rel="noopener noreferrer" target="_blank">Хабр — Rust roadmap 2026</a> — обзор современного стека Rust и backend-экосистемы.</li>
+<li><a class="external-link" href="https://stepik.org/course/300965/promo" rel="noopener noreferrer" target="_blank">Rust: за выходные — Stepik</a> — полезно вернуться к синтаксису и типам, когда начнёшь писать более крупное приложение.</li>
+</ol>
+<h2 id="rust-5-postgresql-sqlx-и-diesel" tabindex="-1">Rust-5. PostgreSQL, SQLx и Diesel</h2>
+<p><strong>Срок:</strong> 3–4 недели.<br/>
+<strong>Приоритет:</strong> обязательно знать один рабочий способ доступа к PostgreSQL.</p>
+<h3 id="что-изучить-16" tabindex="-1">Что изучить</h3>
+<ul>
+<li>SQLx: async queries, pool, <code>query!</code>/<code>query_as!</code>, typed rows, transactions.</li>
+<li>Миграции через SQLx CLI или выбранный миграционный инструмент.</li>
+<li>Diesel: schema, query builder, модели, связи и типобезопасные запросы.</li>
+<li>Connection pooling, ошибки БД, транзакции и контексты запросов.</li>
+<li>Индексы, <code>EXPLAIN ANALYZE</code>, N+1 и пагинация.</li>
+</ul>
+<h3 id="что-выбрать-1" tabindex="-1">Что выбрать</h3>
+<p>Для первого асинхронного backend-проекта рекомендую <strong>Axum + SQLx + PostgreSQL</strong>: SQL остаётся явным, интеграция с Tokio естественная, а SQLx может проверять запросы на этапе компиляции при соответствующей настройке offline/online metadata. Diesel стоит изучить отдельно, если целевая команда его использует или нужен query-builder/ORM-style API.</p>
+<h3 id="практика-16" tabindex="-1">Практика</h3>
+<p>Сделай CRUD для задач и проектов с PostgreSQL. Добавь миграции, индексы, транзакцию и integration tests. Для SQLx compile-time checks настрой проверку запросов в CI.</p>
+<p><strong>Критерий готовности:</strong> можешь открыть пул соединений, выполнить безопасный параметризованный запрос, обработать ошибку, выполнить транзакцию, прогнать миграции и протестировать код против реальной БД.</p>
+<h3 id="бесплатные-материалы-на-русском-16" tabindex="-1">Бесплатные материалы на русском</h3>
+<ol type="1">
+<li><a class="external-link" href="https://dsbasko.github.io/postgres-cookbook/ru/" rel="noopener noreferrer" target="_blank">PostgreSQL Cookbook</a> — углублённая практика SQL, PostgreSQL 18, индексов, транзакций и MVCC; хотя примеры интеграции ориентированы на Go, разделы SQL/PostgreSQL применимы и в Rust.</li>
+<li><a class="external-link" href="https://postgrespro.ru/docs/postgresql/18/tutorial" rel="noopener noreferrer" target="_blank">Postgres Professional — учебник PostgreSQL</a> — официально-подобная документация на русском по SQL и возможностям PostgreSQL.</li>
+<li><a class="external-link" href="https://habr.com/ru/companies/timeweb/articles/789662/" rel="noopener noreferrer" target="_blank">Хабр — Начало работы с Axum</a> — исторический пример связи Axum и SQLx; не копируй версии зависимостей из старой статьи.</li>
+</ol>
+<h2 id="rust-6-аутентификация-безопасность-redis-и-grpc" tabindex="-1">Rust-6. Аутентификация, безопасность, Redis и gRPC</h2>
+<p><strong>Срок:</strong> 3–4 недели.<br/>
+<strong>Приоритет:</strong> auth и security обязательны; Redis, брокер и gRPC — полезные расширения.</p>
+<h3 id="что-изучить-17" tabindex="-1">Что изучить</h3>
+<ul>
+<li>Сессии, cookies, JWT, refresh tokens, OAuth 2.0 и OpenID Connect.</li>
+<li>Хеширование паролей Argon2id/bcrypt и безопасное управление секретами.</li>
+<li>RBAC и проверка доступа к отдельному объекту.</li>
+<li>SQL injection, XSS, CSRF, CORS, SSRF, rate limiting.</li>
+<li>Redis-клиент, TTL, cache-aside, cache invalidation.</li>
+<li>Один брокер: RabbitMQ или Kafka; retries, dead-letter queue, idempotency.</li>
+<li>gRPC с Tonic и Protocol Buffers; deadlines, cancellation и streaming.</li>
+</ul>
+<h3 id="практика-17" tabindex="-1">Практика</h3>
+<p>Добавь session-based или JWT-аутентификацию, авторизацию по ролям и ownership checks. После этого добавь кеширование одного endpoint. Не реализуй сложную микросервисную инфраструктуру до готовности базового монолита.</p>
+<p><strong>Критерий готовности:</strong> можешь реализовать аутентификацию и проверку прав, защитить данные пользователя от доступа другого пользователя и объяснить, как устроены повторная доставка сообщений и идемпотентность.</p>
+<h3 id="бесплатные-материалы-на-русском-17" tabindex="-1">Бесплатные материалы на русском</h3>
+<ol type="1">
+<li><a class="external-link" href="https://academy.whitevveb-security.ru/ru/courses/bezopasnaya-razrabotka/" rel="noopener noreferrer" target="_blank">Белый Веб — Безопасная разработка и AppSec</a> — бесплатные модули по SDL, OWASP, SAST/DAST/SCA и безопасной разработке.</li>
+<li><a class="external-link" href="https://academy.whitevveb-security.ru/ru/courses/bezopasnost-api/" rel="noopener noreferrer" target="_blank">Белый Веб — Безопасность API</a> — вводный бесплатный модуль по API-контрактам и безопасности; углублённая часть курса платная.</li>
+<li><a class="external-link" href="https://habr.com/ru/articles/1033730/" rel="noopener noreferrer" target="_blank">Хабр — Rust roadmap 2026</a> — ориентир по библиотекам Rust, включая инструменты для серверной разработки.</li>
+</ol>
+<p>Для актуального API Redis-клиента, Tonic, SQLx и Axum используй официальные docs.rs/crates.io и документацию проектов: качественных русскоязычных практических материалов по этим библиотекам меньше, чем по Go.</p>
+<h2 id="rust-7-тестирование-качество-наблюдаемость-и-деплой" tabindex="-1">Rust-7. Тестирование, качество, наблюдаемость и деплой</h2>
+<p><strong>Срок:</strong> 3–4 недели.<br/>
+<strong>Приоритет:</strong> тестирование, Cargo, форматирование и CI обязательны; глубокая диагностика runtime — позже.</p>
+<h3 id="что-изучить-18" tabindex="-1">Что изучить</h3>
+<ul>
+<li><code>cargo fmt</code>, <code>cargo clippy</code>, <code>cargo check</code>, <code>cargo test</code>, <code>cargo audit</code>.</li>
+<li>Unit и integration tests, test modules, async tests с <code>tokio::test</code>.</li>
+<li>Тестирование HTTP-роутера и middleware через Tower utilities.</li>
+<li>Testcontainers или контейнерный PostgreSQL для integration tests.</li>
+<li>Structured logging и tracing через <code>tracing</code> / <code>tracing-subscriber</code>.</li>
+<li>Метрики и tracing; основы OpenTelemetry.</li>
+<li>Конфигурация через env и typed configuration; валидация при запуске.</li>
+<li>Graceful shutdown: остановка listener, сигнал shutdown для tasks, закрытие DB pool.</li>
+<li>Docker multi-stage builds, CI/CD, secrets, deploy и rollback.</li>
+</ul>
+<h3 id="практика-18" tabindex="-1">Практика</h3>
+<p>Настрой CI: fmt check, clippy, tests, SQLx offline checks, build. Добавь Dockerfile и Compose, задеплой сервис, добавь health/readiness, логи и метрики. Создай backup PostgreSQL и проверь restore.</p>
+<p><strong>Критерий готовности:</strong> чистая сборка и тесты запускаются в CI; сервис собирается в контейнере, получает конфигурацию снаружи, корректно завершает задачи и БД-соединения.</p>
+<h3 id="бесплатные-материалы-на-русском-18" tabindex="-1">Бесплатные материалы на русском</h3>
+<ol type="1">
+<li><a class="external-link" href="https://courses.interlab.app/courses/docker" rel="noopener noreferrer" target="_blank">InterLAB — Docker и деплой</a> — контейнеризация, секреты, Nginx, HTTPS, VPS и GitHub Actions.</li>
+<li><a class="external-link" href="https://stepik.org/course/298754/promo" rel="noopener noreferrer" target="_blank">Stepik — Rustlings</a> — практика языка, тестов и типовой структуры Rust-кода.</li>
+<li><a class="external-link" href="https://doc.rust-lang.ru/async-book/" rel="noopener noreferrer" target="_blank">Асинхронная книга Rust на русском</a> — полезна для понимания задач, runtime и корректного async-поведения.</li>
+</ol>
+<h2 id="rust-8-экосистема-и-инструменты-что-выбрать" tabindex="-1">Rust-8. Экосистема и инструменты: что выбрать</h2>
+<ul>
+<li><strong>HTTP:</strong> Axum как основной фреймворк; Actix Web и Rocket — для знакомства, а не параллельного изучения.</li>
+<li><strong>Async runtime:</strong> Tokio.</li>
+<li><strong>DB:</strong> SQLx как основной путь; Diesel как альтернатива.</li>
+<li><strong>Serialization:</strong> Serde.</li>
+<li><strong>Ошибки:</strong> <code>thiserror</code> для библиотечных/domain ошибок, <code>anyhow</code> для верхнего уровня приложения/CLI — осознанно, не смешивая типы без причины.</li>
+<li><strong>Validation:</strong> выбери подходящую библиотеку или валидируй входные DTO отдельным слоем.</li>
+<li><strong>Redis:</strong> <code>redis</code> или другой зрелый async-клиент, выбранный под текущую версию Tokio.</li>
+<li><strong>gRPC:</strong> Tonic.</li>
+<li><strong>Logging/tracing:</strong> <code>tracing</code> и <code>tracing-subscriber</code>.</li>
+<li><strong>Toolchain:</strong> Cargo, rustfmt, Clippy, rust-analyzer.</li>
+<li><strong>Security/supply chain:</strong> проверяй обновления зависимостей и advisories, не добавляй crate только ради одной строки кода.</li>
+</ul>
+<h2 id="особенность-русскоязычных-материалов-по-rust" tabindex="-1">Особенность русскоязычных материалов по Rust</h2>
+<p>Для Rust есть хороший русскоязычный учебник и практикум, но практические руководства по современному Axum/SQLx/Tokio обновляются быстрее переводов. Некоторые старые статьи используют Axum 0.6/0.7 и устаревшие API. Используй их для понимания архитектуры, а код и версии зависимостей сверяй с текущей документацией. Поскольку ты можешь читать техническую документацию на английском, это не должно стать препятствием.</p>
+<h1 id="часть-iv-production-backend-что-должен-уметь-junior" tabindex="-1">Часть IV. Production Backend: что должен уметь Junior</h1>
+<p>Production — это не набор модных технологий. Это способность сделать сервис предсказуемым, безопасным, тестируемым и поддерживаемым.</p>
+<h2 id="обязательно-для-первой-работы" tabindex="-1">Обязательно для первой работы</h2>
+<ol type="1">
+<li><strong>API contract:</strong> корректные методы и статус-коды, понятные ошибки, validation, pagination, filtering и sorting, OpenAPI.</li>
+<li><strong>Authentication/authorization:</strong> безопасное хранение паролей, сессии или JWT, OAuth2/OIDC на уровне понимания, RBAC и object-level authorization.</li>
+<li><strong>Безопасность:</strong> параметризованные SQL-запросы, отсутствие секретов в Git, безопасные cookies, CORS/CSRF/XSS на базовом уровне, rate limiting, проверка размеров входных данных.</li>
+<li><strong>Базы данных:</strong> миграции, транзакции, индексы, connection pool, backup/restore на базовом уровне.</li>
+<li><strong>Тестирование:</strong> unit tests для бизнес-логики, integration tests с БД, API tests, проверка ошибок и граничных случаев.</li>
+<li><strong>Контейнеризация и CI:</strong> Dockerfile, Docker Compose, автоматический формат/lint/test/build в GitHub Actions.</li>
+<li><strong>Эксплуатация:</strong> конфигурация через env, structured logs, health checks, graceful shutdown, понятное README и рабочий deployment.</li>
+<li><strong>Надёжность:</strong> таймауты, ограничение параллелизма, корректная обработка ошибок, не запускать бесконечные фоновые задачи без управления их жизненным циклом.</li>
+</ol>
+<h2 id="полезно-но-можно-изучить-после-первого-проекта" tabindex="-1">Полезно, но можно изучить после первого проекта</h2>
+<ul>
+<li>Redis и кеширование с продуманной инвалидацией.</li>
+<li>RabbitMQ или Kafka — один брокер, а не все сразу.</li>
+<li>Outbox pattern, retries с backoff, dead-letter queue, идемпотентные consumers.</li>
+<li>Prometheus/Grafana, OpenTelemetry, distributed tracing.</li>
+<li>Нагрузочное тестирование и профилирование.</li>
+<li>gRPC и Protocol Buffers.</li>
+<li>Базовые облачные сервисы: compute, networking, object storage, managed database.</li>
+</ul>
+<h2 id="на-потом" tabindex="-1">На потом</h2>
+<ul>
+<li>Kubernetes и service mesh.</li>
+<li>Сложная multi-region архитектура.</li>
+<li>Сложные event sourcing/CQRS системы.</li>
+<li>Собственная реализация распределённых блокировок и async runtime.</li>
+<li>Продвинутые криптографические протоколы.</li>
+</ul>
+<p>Не пытайся демонстрировать Kubernetes и десяток микросервисов в каждом учебном проекте. Один хорошо протестированный и задеплоенный модульный монолит убедительнее, чем незавершённая распределённая система.</p>
+<h2 id="рекомендуемые-дополнительные-материалы" tabindex="-1">Рекомендуемые дополнительные материалы</h2>
+<ol type="1">
+<li><a class="external-link" href="https://academy.whitevveb-security.ru/ru/courses/bezopasnaya-razrabotka/" rel="noopener noreferrer" target="_blank">Белый Веб — Безопасная разработка и AppSec</a> — бесплатный курс по безопасному SDLC и OWASP.</li>
+<li><a class="external-link" href="https://owasp.org/www-project-top-ten/" rel="noopener noreferrer" target="_blank">OWASP Top 10:2025</a> — актуальная версия стандартного документа о рисках веб-приложений. Англоязычный первоисточник; русскоязычный перевод версии 2025 на дату подготовки ещё не был опубликован в официальном каталоге переводов.</li>
+<li><a class="external-link" href="https://courses.interlab.app/courses/docker" rel="noopener noreferrer" target="_blank">InterLAB — Docker и деплой</a> — практический путь от Docker до деплоя на VPS.</li>
+<li><a class="external-link" href="https://latorn.ru/courses/prometheus-i-grafana-monitoring-i-observability" rel="noopener noreferrer" target="_blank">Latorn — Prometheus и Grafana (проверь условия бесплатного доступа)</a> — русскоязычный курс по метрикам, PromQL, дашбордам и алертам; дополнительный этап после основного backend.</li>
+</ol>
+<h1 id="часть-v-проекты-для-портфолио" tabindex="-1">Часть V. Проекты для портфолио</h1>
+<p>Два законченных, хорошо описанных и задеплоенных проекта лучше, чем десять незаконченных CRUD-примеров. Для каждого проекта нужны понятные бизнес-сценарии, продуманная схема БД, тесты, Docker, CI и инструкция запуска.</p>
+<h2 id="проект-1-task-management-api--сделать-первым" tabindex="-1">Проект 1. Task Management API — сделать первым</h2>
+<p><strong>Цель:</strong> показать, что ты умеешь реализовать обычный backend-сервис от HTTP до БД и деплоя.</p>
+<h3 id="функциональность" tabindex="-1">Функциональность</h3>
+<ul>
+<li>Регистрация, вход и выход.</li>
+<li>Пользователь создаёт workspace/project и приглашает участников.</li>
+<li>Роли: owner, admin, member, viewer.</li>
+<li>CRUD задач, статусы, назначение исполнителя, сроки и комментарии.</li>
+<li>Фильтрация по статусу, исполнителю и сроку; сортировка и пагинация.</li>
+<li>Проверка прав на уровне объекта: пользователь не должен видеть чужие проекты и задачи.</li>
+<li>OpenAPI/Swagger, корректные HTTP status codes и единый формат ошибок.</li>
+</ul>
+<h3 id="пример-api" tabindex="-1">Пример API</h3>
+<ul>
+<li><code>POST /v1/auth/register</code></li>
+<li><code>POST /v1/auth/login</code></li>
+<li><code>POST /v1/auth/logout</code></li>
+<li><code>GET /v1/users/me</code></li>
+<li><code>POST /v1/projects</code></li>
+<li><code>GET /v1/projects?limit=20&amp;cursor=...</code></li>
+<li><code>GET /v1/projects/{projectId}</code></li>
+<li><code>POST /v1/projects/{projectId}/members</code></li>
+<li><code>GET /v1/projects/{projectId}/tasks?status=open&amp;assignee=...</code></li>
+<li><code>POST /v1/projects/{projectId}/tasks</code></li>
+<li><code>PATCH /v1/tasks/{taskId}</code></li>
+<li><code>DELETE /v1/tasks/{taskId}</code></li>
+<li><code>POST /v1/tasks/{taskId}/comments</code></li>
+<li><code>GET /healthz</code> и <code>GET /readyz</code></li>
+</ul>
+<h3 id="схема-данных" tabindex="-1">Схема данных</h3>
+<p><code>users</code>, <code>sessions</code> (или <code>refresh_tokens</code>), <code>projects</code>, <code>project_members</code>, <code>tasks</code>, <code>task_comments</code>. Используй внешние ключи и уникальные ограничения. Добавь индексы для частых фильтров: project_id + status, assignee_id, created_at. Не индексируй каждый столбец без анализа запросов.</p>
+<h3 id="архитектура" tabindex="-1">Архитектура</h3>
+<p>Модульный монолит: HTTP/API layer → application/service layer → data access layer. Бизнес-правила и authorization checks не должны жить только в HTTP handler. Миграции — часть репозитория.</p>
+<h3 id="реализация-для-go" tabindex="-1">Реализация для Go</h3>
+<p>Go, <code>net/http</code> + Chi, PostgreSQL, pgx/pgxpool, sqlc, Goose, Redis только если появится понятный кешируемый сценарий, <code>testing</code>/<code>httptest</code>, Docker Compose, GitHub Actions.</p>
+<h3 id="реализация-для-rust" tabindex="-1">Реализация для Rust</h3>
+<p>Rust, Tokio, Axum, Serde, SQLx, PostgreSQL, SQLx migrations, <code>tracing</code>, <code>tokio::test</code>, Tower utilities для тестирования роутера, Docker Compose, GitHub Actions.</p>
+<h3 id="что-приложить-в-github" tabindex="-1">Что приложить в GitHub</h3>
+<ul>
+<li>README с бизнес-целью, функциями, архитектурой и схемой данных.</li>
+<li>ER diagram и краткое описание решений.</li>
+<li>Инструкции запуска локально и через Docker Compose.</li>
+<li><code>.env.example</code> без секретов.</li>
+<li>OpenAPI spec или Swagger UI.</li>
+<li>Unit и integration tests.</li>
+<li>CI badge и workflow.</li>
+<li>Ссылка на рабочий deployment и demo-аккаунт с ограниченными правами, если безопасно.</li>
+<li>Раздел «Ограничения и что бы я улучшил дальше».</li>
+</ul>
+<p><strong>Готовность проекта:</strong> незнакомый разработчик может развернуть проект по README, выполнить основные сценарии, запустить тесты, а ты можешь объяснить каждое архитектурное решение.</p>
+<h2 id="проект-2-notification--event-processing-service" tabindex="-1">Проект 2. Notification / Event Processing Service</h2>
+<p><strong>Цель:</strong> показать работу с асинхронными задачами, очередями, повторными попытками и идемпотентностью.</p>
+<h3 id="функциональность-1" tabindex="-1">Функциональность</h3>
+<ul>
+<li>Клиент создаёт уведомление для пользователя или подписывается на событие.</li>
+<li>API принимает запрос и сохраняет команду в БД.</li>
+<li>Worker отправляет email/webhook в тестовый sink или mock SMTP.</li>
+<li>Временные ошибки приводят к retry с exponential backoff.</li>
+<li>Постоянные ошибки попадают в dead-letter queue.</li>
+<li>Повторная доставка одного события не должна создавать дубли.</li>
+<li>Есть просмотр статуса доставки и история попыток.</li>
+</ul>
+<h3 id="пример-api-1" tabindex="-1">Пример API</h3>
+<ul>
+<li><code>POST /v1/notifications</code></li>
+<li><code>GET /v1/notifications/{id}</code></li>
+<li><code>GET /v1/notifications?status=failed</code></li>
+<li><code>POST /v1/subscriptions</code></li>
+<li><code>GET /v1/subscriptions</code></li>
+<li><code>DELETE /v1/subscriptions/{id}</code></li>
+<li><code>POST /v1/webhooks/test</code></li>
+<li><code>GET /healthz</code> и <code>GET /readyz</code></li>
+</ul>
+<h3 id="схема-данных-1" tabindex="-1">Схема данных</h3>
+<p><code>users</code>, <code>subscriptions</code>, <code>notifications</code>, <code>delivery_attempts</code>, <code>outbox_events</code>, <code>idempotency_keys</code>. Для outbox и статусов создай индексы, поддерживающие выборку ожидающих задач.</p>
+<h3 id="инженерные-решения-которые-стоит-показать" tabindex="-1">Инженерные решения, которые стоит показать</h3>
+<ul>
+<li>Transactional Outbox: запись бизнес-изменения и события в одной транзакции.</li>
+<li>Idempotency key для HTTP-запросов.</li>
+<li>Retry с backoff и ограниченным числом попыток.</li>
+<li>Dead-letter queue и ручной replay.</li>
+<li>Timeout для внешнего вызова и ограничение параллелизма.</li>
+<li>Structured logs и корреляция по event/request ID.</li>
+</ul>
+<h3 id="реализация-для-go-1" tabindex="-1">Реализация для Go</h3>
+<p>Go workers и goroutines, <code>context</code>, PostgreSQL + pgx/sqlc, RabbitMQ или Kafka (выбрать один), Redis по необходимости, structured logs через <code>slog</code>, integration tests.</p>
+<h3 id="реализация-для-rust-1" tabindex="-1">Реализация для Rust</h3>
+<p>Tokio tasks, channels и semaphore, Axum API, SQLx/PostgreSQL, один брокер через подходящий async-клиент, <code>tracing</code>, async integration tests.</p>
+<h2 id="проект-3-url-shortener--дополнительный-если-останется-время" tabindex="-1">Проект 3. URL Shortener — дополнительный, если останется время</h2>
+<p>Короткие ссылки, уникальные slugs, редирект, expiry, rate limiting, click analytics и кеширование. API: <code>POST /v1/links</code>, <code>GET /{slug}</code>, <code>GET /v1/links/{id}/stats</code>, <code>DELETE /v1/links/{id}</code>. Этот проект хорошо демонстрирует индексы, кеш, уникальные ограничения и горячие ключи, но не заменяет более содержательный Task Management API.</p>
+<h1 id="часть-vi-учебная-стратегия-2-часа-в-день" tabindex="-1">Часть VI. Учебная стратегия: 2 часа в день</h1>
+<h2 id="недельный-график" tabindex="-1">Недельный график</h2>
+<div aria-label="Таблица roadmap" class="table-wrap" role="region" tabindex="0"><table>
+<thead>
+<tr class="header">
+<th>День</th>
+<th>Фокус</th>
+<th>Результат</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Понедельник</td>
+<td>60 мин теория + 60 мин упражнения</td>
+<td>Разобрана новая тема</td>
+</tr>
+<tr class="even">
+<td>Вторник</td>
+<td>30 мин повторение + 90 мин код</td>
+<td>Реализован небольшой пример</td>
+</tr>
+<tr class="odd">
+<td>Среда</td>
+<td>30 мин чтение документации + 90 мин практика</td>
+<td>Код с опорой на docs</td>
+</tr>
+<tr class="even">
+<td>Четверг</td>
+<td>120 мин задачи и тесты</td>
+<td>Решены edge cases</td>
+</tr>
+<tr class="odd">
+<td>Пятница</td>
+<td>30 мин повторение + 90 мин мини-проект</td>
+<td>Функция интегрирована в проект</td>
+</tr>
+<tr class="even">
+<td>Суббота</td>
+<td>120 мин проект/рефакторинг/code review</td>
+<td>Законченный инкремент</td>
+</tr>
+<tr class="odd">
+<td>Воскресенье</td>
+<td>60 мин алгоритмы + 30 мин английская документация + 30 мин планирование</td>
+<td>Повторение и план следующей недели</td>
+</tr>
+</tbody>
+</table></div>
+<p>Если чувствуешь накопившуюся усталость, снизь нагрузку на одну неделю: оставь лёгкое повторение и проект, но не прекращай надолго. Лучше устойчивый темп, чем несколько недель рывка и выгорание.</p>
+<h2 id="рекомендуемое-распределение-времени" tabindex="-1">Рекомендуемое распределение времени</h2>
+<ul>
+<li>25% — теория и чтение.</li>
+<li>50% — самостоятельный код и задачи.</li>
+<li>15% — тесты, отладка и рефакторинг.</li>
+<li>10% — повторение, алгоритмы, английская документация и заметки.</li>
+</ul>
+<p>На старте теории может быть немного больше. После первых нескольких недель постепенно увеличивай долю практики.</p>
+<h2 id="как-работать-с-англоязычной-документацией" tabindex="-1">Как работать с англоязычной документацией</h2>
+<ol type="1">
+<li>Сначала разберись в концепции на русском, если она новая.</li>
+<li>Открой официальную документацию на английском и прочитай разделы Overview, Getting Started, Examples и API Reference.</li>
+<li>Запусти пример локально и измени его под свою задачу.</li>
+<li>Запиши незнакомые технические термины в личный словарь: ownership, borrow, deadline, cancellation, connection pool, idempotency и т.д.</li>
+<li>Не переводи весь текст подряд. Учись находить нужный раздел и проверять точную сигнатуру функции/метода.</li>
+</ol>
+<h2 id="как-практиковать-code-review" tabindex="-1">Как практиковать code review</h2>
+<ul>
+<li>Работай через отдельные feature branches и Pull Requests.</li>
+<li>Один PR — одна логическая задача; избегай гигантских коммитов.</li>
+<li>Перед merge проверь форматирование, lint, тесты, миграции и README.</li>
+<li>В описании PR укажи цель, ключевые решения, тесты и риски.</li>
+<li>Раз в неделю возвращайся к одному старому участку кода и улучшай читаемость, тестируемость и обработку ошибок.</li>
+<li>Проси ревью у сообщества или коллег, но не принимай комментарий без понимания причины.</li>
+</ul>
+<h2 id="как-использовать-ai-и-не-потерять-навык" tabindex="-1">Как использовать AI и не потерять навык</h2>
+<p>AI можно использовать для объяснения ошибок компилятора, идей тест-кейсов и review, но сначала попробуй решить задачу самостоятельно. Не отправляй в публичные инструменты секреты и приватный код работодателя. Проверяй сгенерированные запросы, SQL, миграции и безопасность вручную. На собеседовании важно уметь объяснить написанный код без подсказчика.</p>
+<h1 id="часть-vii-go-vs-rust-рынок-и-выбор-первого-языка" tabindex="-1">Часть VII. Go vs Rust: рынок и выбор первого языка</h1>
+<h2 id="сложность-обучения" tabindex="-1">Сложность обучения</h2>
+<div aria-label="Таблица roadmap" class="table-wrap" role="region" tabindex="0"><table>
+<thead>
+<tr class="header">
+<th>Критерий</th>
+<th>Go</th>
+<th>Rust</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Синтаксис</td>
+<td>Относительно небольшой и прямолинейный</td>
+<td>Более сложный набор концепций и строгая система типов</td>
+</tr>
+<tr class="even">
+<td>Память</td>
+<td>Garbage Collector; важно понимать аллокации и escape analysis на базовом уровне</td>
+<td>Ownership/Borrowing/Lifetimes; компилятор проверяет правила владения</td>
+</tr>
+<tr class="odd">
+<td>Ошибки</td>
+<td>Явное возвращение <code>error</code></td>
+<td><code>Result</code>/<code>Option</code>, типизированная обработка ошибок</td>
+</tr>
+<tr class="even">
+<td>Конкурентность</td>
+<td>Goroutines/channels и sync primitives</td>
+<td>Threads/channels, ownership rules и async runtime</td>
+</tr>
+<tr class="odd">
+<td>Порог входа в web API</td>
+<td>Ниже: стандартный <code>net/http</code> и много backend-примеров</td>
+<td>Выше: сначала нужно освоить ownership и async-модель</td>
+</tr>
+<tr class="even">
+<td>Оценка времени новичку</td>
+<td>Примерно 9–15 месяцев до конкурентного Junior-профиля</td>
+<td>Примерно 12–18 месяцев до конкурентного Junior-профиля</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="рынок-и-востребованность" tabindex="-1">Рынок и востребованность</h2>
+<p>На дату документа доступен Stack Overflow Developer Survey 2026. В таблице языков, на которую ответили 14 099 респондентов, Go указали 16,5%, Rust — 18,0%. В метрике «admired» (пользовались и хотят продолжать) Rust получил 67,4%, Go — 49,5%. Это показывает интерес разработчиков к языкам, но <strong>не является статистикой вакансий или долей рынка труда</strong>.</p>
+<p>Практическое различие ролей:</p>
+<ul>
+<li><strong>Go:</strong> backend-сервисы, облачная инфраструктура, distributed systems, DevOps-инструменты, платформенные команды, API и микросервисы. Go широко используется для разработки обычных серверных приложений.</li>
+<li><strong>Rust:</strong> системное ПО, инфраструктурные компоненты, сетевые инструменты, высокопроизводительные сервисы, базы данных/хранилища, security, embedded, blockchain и отдельные fintech-направления.</li>
+</ul>
+<p>У Go обычно более широкий набор вакансий, где язык выступает основным backend-стеком. Rust растёт и хорошо ценится в отдельных нишах, но число команд, готовых нанимать новичка именно на Rust, ограничено. Вакансии уровня Senior/Middle нельзя считать доказательством наличия начальных позиций.</p>
+<h2 id="первая-работа-и-remote-first-найм" tabindex="-1">Первая работа и remote-first найм</h2>
+<p><strong>Go имеет преимущество для первой backend-работы.</strong> Причина не в том, что язык «лучше», а в более широком применении в типовых backend/cloud командах и более прямом пути к созданию API, работающего с PostgreSQL.</p>
+<p>Для Rust первая работа вероятнее в компании, которая уже использует Rust в core-инфраструктуре или системных компонентах. Часто такие роли требуют сильного понимания сетей, concurrency, производительности и опыта разработки. Поэтому junior-вход уже.</p>
+<p>Удалённая работа «из любой страны» встречается реже, чем просто remote. Работодатель может ограничивать найм странами, в которых у него есть юридическое лицо/payroll, требовать разрешение на работу, пересечение часовых поясов или нанимать только contractors. На международном рынке новичку часто проще начать с локальной/гибридной работы, стажировки, open-source контрибьюции или контракта, чем сразу получить global-remote позицию.</p>
+<h2 id="зарплаты-как-не-сделать-неверный-вывод" tabindex="-1">Зарплаты: как не сделать неверный вывод</h2>
+<p>Универсальной сравнимой таблицы junior Go vs junior Rust для США, Европы, Великобритании, международной удалёнки и ЮАР нет. Публичные агрегаторы используют разные выборки, валюты, типы контрактов, уровни и географические фильтры.</p>
+<p>Для иллюстрации ограничений: один агрегатор Go-вакансий в ноябре 2026 показывал 52 объявления с указанным уровнем Junior в США; другой Rust-агрегатор — всего 8 junior-объявлений с указанной зарплатой в США. Такие малые выборки не позволяют делать надёжный вывод, что один язык стабильно оплачивается лучше другого. Высокие американские advertised salaries нельзя переносить на зарплату кандидата, работающего из ЮАР или другой страны.</p>
+<p>При сравнении предложений всегда проверяй:</p>
+<ul>
+<li>страна и город зарплатной выборки;</li>
+<li>Junior/Mid/Senior и требуемый опыт;</li>
+<li>employee или contractor;</li>
+<li>annual base salary или total compensation;</li>
+<li>локальная зарплата или международная remote;</li>
+<li>наличие права на работу в стране работодателя;</li>
+<li>размер выборки и дата обновления данных.</li>
+</ul>
+<p>Не выбирай Rust только ради обещания более высокой зарплаты. Для первой работы вероятность получить оффер важнее гипотетической медианы опытных специалистов.</p>
+<h2 id="когда-выбрать-go" tabindex="-1">Когда выбрать Go</h2>
+<p>Выбирай Go первым, если:</p>
+<ul>
+<li>главная цель — получить первую backend-работу как можно скорее;</li>
+<li>интересуют API, микросервисы, cloud-native и инфраструктурные сервисы;</li>
+<li>хочешь быстрее перейти от основ языка к полноценному проекту;</li>
+<li>планируешь расширять стек в сторону DevOps/platform engineering.</li>
+</ul>
+<h2 id="когда-выбрать-rust" tabindex="-1">Когда выбрать Rust</h2>
+<p>Выбирай Rust первым, если:</p>
+<ul>
+<li>тебя мотивируют системы, память, производительность и контроль ресурсов;</li>
+<li>интересны embedded, networking, databases, runtime, security или инфраструктурные компоненты;</li>
+<li>готов потратить больше времени на язык до полноценной backend-разработки;</li>
+<li>видишь конкретные вакансии/команды, которые используют Rust и нанимают специалистов начального уровня.</li>
+</ul>
+<h2 id="источники-рыночных-данных" tabindex="-1">Источники рыночных данных</h2>
+<ol type="1">
+<li><a class="external-link" href="https://survey.stackoverflow.co/2026/technology/data/languages" rel="noopener noreferrer" target="_blank">Stack Overflow Developer Survey 2026 — Technology Data</a> — самоотчёт разработчиков об используемых и желаемых языках; не считать статистикой вакансий.</li>
+<li><a class="external-link" href="https://goroles.com/salaries" rel="noopener noreferrer" target="_blank">Go roles — Salary data, November 2026</a> — агрегатор объявлений Go с зарплатой; смотри размер и географию выборки.</li>
+<li><a class="external-link" href="https://rustjobs.dev/salary-guide" rel="noopener noreferrer" target="_blank">RustJobs.dev — Rust Developer Salary Guide 2026</a> — агрегатор Rust-вакансий; junior-выборка мала, данные не эквивалентны global-remote предложению.</li>
+</ol>
+<h1 id="часть-viii-реалистичный-календарный-план" tabindex="-1">Часть VIII. Реалистичный календарный план</h1>
+<h2 id="вариант-a-go--приоритет-первой-работы" tabindex="-1">Вариант A: Go — приоритет первой работы</h2>
+<div aria-label="Таблица roadmap" class="table-wrap" role="region" tabindex="0"><table>
+<thead>
+<tr class="header">
+<th>Период</th>
+<th>Что делать</th>
+<th>Контрольная точка</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Месяцы 1–2</td>
+<td>Программирование, базовые алгоритмы, сети и HTTP</td>
+<td>Пишешь небольшие программы и объясняешь жизненный цикл HTTP-запроса</td>
+</tr>
+<tr class="even">
+<td>Месяцы 3–4</td>
+<td>Linux, Git, SQL, PostgreSQL, Docker, архитектура</td>
+<td>Проектируешь схему БД и запускаешь инфраструктуру через Compose</td>
+</tr>
+<tr class="odd">
+<td>Месяцы 5–6</td>
+<td>Go, стандартная библиотека, ошибки, интерфейсы, generics, concurrency</td>
+<td>Пишешь CLI и worker pool с тестами</td>
+</tr>
+<tr class="even">
+<td>Месяцы 7–8</td>
+<td>net/http, Chi, REST, PostgreSQL, миграции, auth</td>
+<td>Есть API с регистрацией, ролями и CRUD</td>
+</tr>
+<tr class="odd">
+<td>Месяцы 9–10</td>
+<td>Security, integration tests, Docker, CI/CD, deployment</td>
+<td>Первый production-style проект развёрнут и покрыт тестами</td>
+</tr>
+<tr class="even">
+<td>Месяцы 11–12</td>
+<td>Второй проект, алгоритмы, SQL и подготовка к собеседованиям</td>
+<td>Портфолио из 2 проектов, README, CI, demo и активные отклики</td>
+</tr>
+<tr class="odd">
+<td>Месяцы 13–15</td>
+<td>Улучшение слабых мест, собеседования, стажировки/контракты</td>
+<td>Стабильный поток откликов и целевые технические интервью</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="вариант-b-rust--приоритет-rust-backend" tabindex="-1">Вариант B: Rust — приоритет Rust backend</h2>
+<div aria-label="Таблица roadmap" class="table-wrap" role="region" tabindex="0"><table>
+<thead>
+<tr class="header">
+<th>Период</th>
+<th>Что делать</th>
+<th>Контрольная точка</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Месяцы 1–2</td>
+<td>Программирование, алгоритмы, сети, HTTP</td>
+<td>Основы программирования и протоколов закреплены</td>
+</tr>
+<tr class="even">
+<td>Месяцы 3–4</td>
+<td>Linux, Git, SQL/PostgreSQL, Docker, архитектура</td>
+<td>Можешь проектировать и запускать БД/инфраструктуру</td>
+</tr>
+<tr class="odd">
+<td>Месяцы 5–7</td>
+<td>Rust Book, Stepik, Rustlings, ownership/borrowing/lifetimes</td>
+<td>Пишешь CLI/library crate и проходишь основные упражнения</td>
+</tr>
+<tr class="even">
+<td>Месяцы 8–9</td>
+<td>Threads, async, Future, Tokio</td>
+<td>Есть async worker/client с cancellation и тестами</td>
+</tr>
+<tr class="odd">
+<td>Месяцы 10–11</td>
+<td>Axum, REST, SQLx, PostgreSQL</td>
+<td>Есть API с БД и миграциями</td>
+</tr>
+<tr class="even">
+<td>Месяцы 12–13</td>
+<td>Auth, безопасность, тесты, Docker и CI/CD</td>
+<td>Сервис развёрнут и проходит CI</td>
+</tr>
+<tr class="odd">
+<td>Месяцы 14–16</td>
+<td>Два проекта, observability и подготовка к интервью</td>
+<td>Портфолио демонстрирует Rust backend и production-практики</td>
+</tr>
+<tr class="even">
+<td>Месяцы 17–18</td>
+<td>Поиск работы, open source, интервью и доработка</td>
+<td>Целевые отклики на Rust/backend роли</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="когда-начинать-откликаться" tabindex="-1">Когда начинать откликаться</h2>
+<p>Не жди, пока изучишь весь список технологий. Начинай отслеживать вакансии, когда у тебя есть:</p>
+<ul>
+<li>уверенный язык и основы алгоритмов;</li>
+<li>один законченный backend API с PostgreSQL и авторизацией;</li>
+<li>тесты, Docker, CI и деплой;</li>
+<li>GitHub README, который позволяет запустить проект;</li>
+<li>способность объяснить архитектуру и trade-offs.</li>
+</ul>
+<p>Откликайся на junior, trainee, graduate, internship и backend roles, где допускают 0–2 года опыта. Не ограничивайся только вакансиями с формулировкой «Junior Go/Rust», если описание допускает backend fundamentals и обучение языку на месте.</p>
+<h1 id="финальная-рекомендация" tabindex="-1">Финальная рекомендация</h1>
+<p>С учётом цели — первая backend-работа, международный рынок и 2 часа ежедневного обучения — <strong>основной маршрут я рекомендую строить на Go</strong>. Он позволяет быстрее выйти к полноценному HTTP API, PostgreSQL, тестам, Docker и реальному проекту. Сконцентрируйся на <code>net/http</code> + Chi, PostgreSQL + pgx + sqlc, миграциях, тестировании и деплое.</p>
+<p><strong>Rust не нужно вычёркивать.</strong> Его можно изучать вторым языком после того, как появится опыт проектирования, разработки, тестирования и эксплуатации backend-сервисов. Это даст правильную базу и позволит глубже оценить, действительно ли тебе нужна системная разработка.</p>
+<p>Если Rust — именно то, что тебя мотивирует, и ты готов к более длинному пути, выбирай Rust осознанно и доводи один проект до production-качества. Сильный законченный проект на Rust лучше, чем два поверхностных языка в резюме.</p>
+<h1 id="приложение-короткий-список-основных-источников" tabindex="-1">Приложение. Короткий список основных источников</h1>
+<h2 id="общая-база" tabindex="-1">Общая база</h2>
+<ul>
+<li><a class="external-link" href="https://stepik.org/course/208904/promo" rel="noopener noreferrer" target="_blank">Stepik — Основы компьютерных сетей</a></li>
+<li><a class="external-link" href="https://developer.mozilla.org/ru/docs/Web/HTTP/Guides/Overview" rel="noopener noreferrer" target="_blank">MDN — HTTP</a></li>
+<li><a class="external-link" href="https://ru.hexlet.io/programs/cli-basics" rel="noopener noreferrer" target="_blank">Хекслет — Командная строка</a></li>
+<li><a class="external-link" href="https://ru.hexlet.io/programs/git-basics-free" rel="noopener noreferrer" target="_blank">Хекслет — Git</a></li>
+<li><a class="external-link" href="https://stepik.org/course/270334/promo" rel="noopener noreferrer" target="_blank">Stepik — PRO SQL</a></li>
+<li><a class="external-link" href="https://courses.interlab.app/courses/sql-postgresql" rel="noopener noreferrer" target="_blank">InterLAB — SQL и PostgreSQL</a></li>
+<li><a class="external-link" href="https://courses.interlab.app/courses/architecture" rel="noopener noreferrer" target="_blank">InterLAB — Архитектура ПО</a></li>
+<li><a class="external-link" href="https://yandex.cloud/ru/training/docker" rel="noopener noreferrer" target="_blank">Yandex Cloud — Docker</a></li>
+</ul>
+<h2 id="go" tabindex="-1">Go</h2>
+<ul>
+<li><a class="external-link" href="https://ru.hexlet.io/programs/go-basics?page=courses" rel="noopener noreferrer" target="_blank">Хекслет — Основы Go</a></li>
+<li><a class="external-link" href="https://latorn.ru/courses/golang-s-nulya" rel="noopener noreferrer" target="_blank">Latorn — Golang с нуля</a></li>
+<li><a class="external-link" href="https://www.godojo.dev/ru/" rel="noopener noreferrer" target="_blank">Godojo — Учебник Go</a></li>
+<li><a class="external-link" href="https://www.youtube.com/watch?v=WlRSVo_eCQ4" rel="noopener noreferrer" target="_blank">Практический курс Go: сервис уведомлений</a></li>
+<li><a class="external-link" href="https://dsbasko.github.io/postgres-cookbook/ru/" rel="noopener noreferrer" target="_blank">PostgreSQL Cookbook для Go</a></li>
+<li><a class="external-link" href="https://selectel.ru/blog/gin-framework-for-go/" rel="noopener noreferrer" target="_blank">Selectel — Gin и веб-фреймворки Go</a></li>
+<li><a class="external-link" href="https://guide.olezhek28.courses/" rel="noopener noreferrer" target="_blank">Бесплатные гайды по Go и gRPC</a></li>
+</ul>
+<h2 id="rust" tabindex="-1">Rust</h2>
+<ul>
+<li><a class="external-link" href="https://stepik.org/course/300965/promo" rel="noopener noreferrer" target="_blank">Stepik — Rust за выходные</a></li>
+<li><a class="external-link" href="https://doc.rust-lang.ru/book/" rel="noopener noreferrer" target="_blank">The Rust Programming Language — русский перевод</a></li>
+<li><a class="external-link" href="https://stepik.org/course/298754/promo" rel="noopener noreferrer" target="_blank">Stepik — Rustlings на русском</a></li>
+<li><a class="external-link" href="https://r007.github.io/RustTraining-Rus/async-book/" rel="noopener noreferrer" target="_blank">Async Rust: от Future до продакшена</a></li>
+<li><a class="external-link" href="https://doc.rust-lang.ru/async-book/" rel="noopener noreferrer" target="_blank">Асинхронная книга Rust</a></li>
+<li><a class="external-link" href="https://habr.com/ru/companies/timeweb/articles/789662/" rel="noopener noreferrer" target="_blank">Хабр — Начало работы с Axum</a></li>
+</ul>
+<h2 id="production" tabindex="-1">Production</h2>
+<ul>
+<li><a class="external-link" href="https://academy.whitevveb-security.ru/ru/courses/bezopasnaya-razrabotka/" rel="noopener noreferrer" target="_blank">Белый Веб — Безопасная разработка и AppSec</a></li>
+<li><a class="external-link" href="https://owasp.org/www-project-top-ten/" rel="noopener noreferrer" target="_blank">OWASP Top 10:2025</a></li>
+<li><a class="external-link" href="https://courses.interlab.app/courses/docker" rel="noopener noreferrer" target="_blank">InterLAB — Docker и деплой</a></li>
+<li><a class="external-link" href="https://latorn.ru/courses/prometheus-i-grafana-monitoring-i-observability" rel="noopener noreferrer" target="_blank">Latorn — Prometheus и Grafana (проверь условия бесплатного доступа)</a></li>
+<li><a class="external-link" href="https://postgrespro.ru/docs/postgresql/18/backup" rel="noopener noreferrer" target="_blank">PostgreSQL — Backup and Restore</a></li>
+</ul>
+<hr/>
+<p><strong>Проверка ссылок и доступности курсов:</strong> 20 ноября 2026 года.<br/>
+Содержание и условия бесплатного доступа могут изменяться; перед началом курса проверь цену и доступность на сайте автора. Время обучения — ориентир при 14 часах в неделю, а не гарантия получения работы.</p>
+
+    </article>
+  </main>
+</div>
+<footer class="footer">
+  <div class="footer-inner">
+    <span><strong>BACKEND FIELD GUIDE</strong> · Go / Rust · 2026</span>
+    <span>Материалы и бесплатный доступ проверялись 20 ноября 2026 года.</span>
+    <span>Оценки сроков ориентировочные и не гарантируют трудоустройство.</span>
+  </div>
+</footer>
+<button class="mobile-toc-button" id="mobileTocButton" type="button" aria-haspopup="dialog" aria-expanded="false">☷ &nbsp;Оглавление</button>
+<div class="mobile-toc-backdrop" id="mobileTocBackdrop" role="dialog" aria-modal="true" aria-label="Оглавление">
+  <div class="toc-panel" id="tocPanelMobile">
+    <div class="toc-head">
+      <div class="toc-label"><span>Содержание</span><button class="icon-button" id="closeMobileToc" type="button" aria-label="Закрыть оглавление">✕</button></div>
+      <input class="toc-search" id="tocSearchMobile" type="search" placeholder="Найти раздел…" aria-label="Поиск по оглавлению">
+    </div>
+    <ul class="toc-list" id="tocListMobile"></ul>
+    <div class="no-results" id="tocEmptyMobile">Ничего не найдено.</div>
+  </div>
+</div>
+<button class="back-to-top" id="backToTop" type="button" aria-label="Наверх" title="Наверх">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m18 15-6-6-6 6"/></svg>
+</button>
+<script>
+(() => {
+  const root = document.documentElement;
+  const progress = document.getElementById('progressBar');
+  const tocButton = document.getElementById('mobileTocButton');
+  const mobileBackdrop = document.getElementById('mobileTocBackdrop');
+  const backToTop = document.getElementById('backToTop');
+  const headings = [...document.querySelectorAll('#article h1, #article h2, #article h3')];
+  const desktopList = document.getElementById('tocListDesktop');
+  const mobileList = document.getElementById('tocListMobile');
+  const tocCount = document.getElementById('tocCount');
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // Build a nested-feeling, accessible table of contents from the article headings.
+  const tocItems = headings.map((heading, index) => {
+    if (!heading.id) heading.id = `section-${index + 1}`;
+    const level = Number(heading.tagName.slice(1));
+    return { id: heading.id, text: heading.textContent.trim(), level };
+  });
+  tocCount.textContent = String(tocItems.length).padStart(2, '0');
+
+  function buildToc(list) {
+    const fragment = document.createDocumentFragment();
+    tocItems.forEach(item => {
+      const li = document.createElement('li');
+      li.className = `toc-item level-${item.level}`;
+      li.dataset.search = item.text.toLocaleLowerCase('ru');
+      const a = document.createElement('a');
+      a.href = `#${item.id}`;
+      a.textContent = item.text;
+      a.addEventListener('click', () => closeMobileToc());
+      li.appendChild(a);
+      fragment.appendChild(li);
+    });
+    list.replaceChildren(fragment);
+  }
+  buildToc(desktopList);
+  buildToc(mobileList);
+
+  function filterToc(input, list, empty) {
+    const q = input.value.trim().toLocaleLowerCase('ru');
+    let shown = 0;
+    list.querySelectorAll('li').forEach(li => {
+      const visible = !q || li.dataset.search.includes(q);
+      li.hidden = !visible;
+      if (visible) shown++;
+    });
+    empty.style.display = shown ? 'none' : 'block';
+  }
+  const searchPairs = [
+    [document.getElementById('tocSearchDesktop'), desktopList, document.getElementById('tocEmptyDesktop')],
+    [document.getElementById('tocSearchMobile'), mobileList, document.getElementById('tocEmptyMobile')]
+  ];
+  searchPairs.forEach(([input,list,empty]) => input.addEventListener('input', () => filterToc(input,list,empty)));
+
+  const linkMap = new Map();
+  [desktopList,mobileList].forEach(list => list.querySelectorAll('a').forEach(a => linkMap.set(a.hash.slice(1), [...(linkMap.get(a.hash.slice(1)) || []), a])));
+  function setActive(id) {
+    linkMap.forEach((links,key) => links.forEach(a => {
+      const active = key === id;
+      a.classList.toggle('active', active);
+      if (active) a.setAttribute('aria-current','location'); else a.removeAttribute('aria-current');
+    }));
+  }
+
+  if ('IntersectionObserver' in window) {
+    const observer = new IntersectionObserver(entries => {
+      const visible = entries.filter(entry => entry.isIntersecting).sort((a,b) => a.boundingClientRect.top - b.boundingClientRect.top);
+      if (visible.length) setActive(visible[0].target.id);
+    }, { rootMargin: '-16% 0px -74% 0px', threshold: 0 });
+    headings.forEach(h => observer.observe(h));
+  }
+
+  let ticking = false;
+  function updateScrollState() {
+    const y = window.scrollY || root.scrollTop;
+    const max = Math.max(1, root.scrollHeight - window.innerHeight);
+    progress.style.width = `${Math.min(100, (y / max) * 100)}%`;
+    root.classList.toggle('has-scrolled', y > 220);
+    backToTop.classList.toggle('visible', y > 700);
+    ticking = false;
+  }
+  window.addEventListener('scroll', () => {
+    if (!ticking) { window.requestAnimationFrame(updateScrollState); ticking = true; }
+  }, { passive: true });
+  window.addEventListener('resize', updateScrollState);
+  updateScrollState();
+
+  function openMobileToc() {
+    mobileBackdrop.classList.add('open');
+    tocButton.setAttribute('aria-expanded','true');
+    document.body.style.overflow = 'hidden';
+    document.getElementById('tocSearchMobile').focus({preventScroll:true});
+  }
+  function closeMobileToc() {
+    mobileBackdrop.classList.remove('open');
+    tocButton.setAttribute('aria-expanded','false');
+    document.body.style.overflow = '';
+  }
+  tocButton.addEventListener('click', openMobileToc);
+  document.getElementById('closeMobileToc').addEventListener('click', closeMobileToc);
+  mobileBackdrop.addEventListener('click', e => { if (e.target === mobileBackdrop) closeMobileToc(); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeMobileToc(); });
+
+  backToTop.addEventListener('click', () => window.scrollTo({top:0,behavior:prefersReducedMotion?'auto':'smooth'}));
+  document.getElementById('printButton').addEventListener('click', () => window.print());
+  document.getElementById('themeToggle').addEventListener('click', () => {
+    const next = root.dataset.theme === 'dark' ? 'light' : 'dark';
+    root.dataset.theme = next;
+    root.style.colorScheme = next;
+    document.querySelector('meta[name="theme-color"]').content = next === 'dark' ? '#0b0f15' : '#f4f6f8';
+  });
+
+  // Make in-page navigation close the mobile drawer and update the active item.
+  document.querySelectorAll('a[href^="#"]').forEach(a => a.addEventListener('click', () => {
+    const id = a.getAttribute('href').slice(1);
+    if (id) setActive(id);
+  }));
+})();
+</script>
+</body>
+</html>
